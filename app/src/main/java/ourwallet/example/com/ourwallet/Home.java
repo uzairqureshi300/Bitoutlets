@@ -31,10 +31,10 @@ public class Home extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-    lock.setOnClickListener(new View.OnClickListener() {
+        lock.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Toast.makeText(Home.this, "lock", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Home.this, "lock" , Toast.LENGTH_SHORT).show();
         }
     });
 
