@@ -16,8 +16,7 @@ public class Overview extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_overview);
         login=(Button)findViewById(R.id.login);
         signup=(Button)findViewById(R.id.sign_up);
@@ -28,11 +27,21 @@ public class Overview extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onClick(View view) {
      view.getId();
+        Intent i;
         switch (view.getId()){
             case R.id.login:
                 login.setBackgroundColor(getResources().getColor(R.color.button_cream));
-                Intent i=new Intent(getApplicationContext(),MainActivity.class);
+
+                i = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(i);
+                finish();
+                break;
+            case R.id.sign_up:
+                signup.setBackgroundColor(getResources().getColor(R.color.button_cream));
+                i=new Intent(getApplicationContext(),SignUp.class);
+                startActivity(i);
+                finish();
         }
+
     }
 }
