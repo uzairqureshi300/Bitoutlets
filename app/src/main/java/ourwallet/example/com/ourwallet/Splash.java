@@ -35,7 +35,7 @@ ImageView splash;
                 }
                 finally
                 {
-                    Intent i=new Intent(Splash.this,MainActivity.class);
+                    Intent i=new Intent(Splash.this,Overview.class);
                     startActivity(i);
                     finish();
                 }

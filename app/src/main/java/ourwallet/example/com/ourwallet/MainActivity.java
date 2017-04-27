@@ -78,6 +78,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onResponse(JSONObject response) {
         Log.e("RESPONSE",response.toString());
-        mProgressDialog.dismiss();
+        try {
+            String error = response.getString("error");
+            String msg=response.getString("msg");
+            Log.e("error"  ,error+"     "+ msg);
+            mProgressDialog.dismiss();
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 }
