@@ -1,6 +1,8 @@
 package ourwallet.example.com.ourwallet;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
@@ -16,6 +18,15 @@ ImageView splash;
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+     SharedPreferences details=getSharedPreferences("Login", Context.MODE_PRIVATE);
+      int login_value=details.getInt("value",0);
+        if(login_value==1){
+            Intent i=new Intent(Splash.this,Home.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
+
+        }
         setContentView(R.layout.activity_splash);
         splash=(ImageView)findViewById(R.id.splash);
         Animation animation1 =
@@ -35,7 +46,7 @@ ImageView splash;
                 }
                 finally
                 {
-                    Intent i=new Intent(Splash.this,Overview.class);
+                    Intent i=new Intent(Splash.this,MainActivity.class);
                     startActivity(i);
                     finish();
                 }

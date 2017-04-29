@@ -8,7 +8,15 @@
 
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
+    <LinearLayout
+        android:id="@+id/content_distributor_drawer_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
 
+    </LinearLayout>
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
@@ -20,7 +28,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
+
         app:menu="@menu/activity_main_drawer" >
         <RelativeLayout
             android:layout_width="match_parent"
