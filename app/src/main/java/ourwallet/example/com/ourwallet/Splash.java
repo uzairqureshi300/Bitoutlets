@@ -18,8 +18,11 @@ ImageView splash;
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-     SharedPreferences details=getSharedPreferences("Login", Context.MODE_PRIVATE);
-      int login_value=details.getInt("value",0);
+
+        setContentView(R.layout.activity_splash);
+        splash=(ImageView)findViewById(R.id.splash);
+        SharedPreferences details=getSharedPreferences("Login", Context.MODE_PRIVATE);
+        int login_value=details.getInt("value",0);
         if(login_value==1){
             Intent i=new Intent(Splash.this,Home.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -27,32 +30,33 @@ ImageView splash;
             finish();
 
         }
-        setContentView(R.layout.activity_splash);
-        splash=(ImageView)findViewById(R.id.splash);
-        Animation animation1 =
-                AnimationUtils.loadAnimation(getApplicationContext(),
-                        R.anim.blink);
-        splash.startAnimation(animation1);
-        Thread timer = new Thread()
-        {
-            public void run()
+        if(login_value==0){
+            Animation animation1 =
+                    AnimationUtils.loadAnimation(getApplicationContext(),
+                            R.anim.blink);
+            splash.startAnimation(animation1);
+            Thread timer = new Thread()
             {
-                try
+                public void run()
                 {
-                    sleep(3000);
-                }catch(Exception e)
-                {
-                    e.printStackTrace();
+                    try
+                    {
+                        sleep(3000);
+                    }catch(Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    finally
+                    {
+                        Intent i=new Intent(Splash.this,MainActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
                 }
-                finally
-                {
-                    Intent i=new Intent(Splash.this,MainActivity.class);
-                    startActivity(i);
-                    finish();
-                }
-            }
-        };
-        timer.start();
+            };
+            timer.start();
+
+        }
 
     }
 }

