@@ -1,6 +1,7 @@
 package ourwallet.example.com.ourwallet;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -43,7 +44,7 @@ public class Home extends AppCompatActivity
     private TextView name,email;
     Fragment fragment = null;
     private Cursor cursor ;
-
+    private SharedPreferences   details;
     ArrayList<String> StoreContacts ;
     private String phonenumber,names;
     @Override
@@ -57,11 +58,13 @@ public class Home extends AppCompatActivity
         StoreContacts = new ArrayList<String>();
         Log.e("1",part1);
         Log.e("2",part2);
-        SharedPreferences   details=getSharedPreferences("User_details", Context.MODE_PRIVATE);
+
+        details = getSharedPreferences("User_details", Context.MODE_PRIVATE);
         Constants.name=details.getString("name","no name");
         Constants.email=details.getString("email","email");
         Constants.adress=details.getString("wallet_address","0");
         Constants.balance=details.getString("balance","balance");
+        Constants.user_id=details.getString("user_id","no_id");
         Constants.image=details.getString("image","image");
         Constants.image =  Constants.image.replace("\\/\\/", "//");
         Constants.image =  Constants.image.replace("\\/", "//");
@@ -174,9 +177,12 @@ public class Home extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Intent i;
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
+
+
             fragment = new User_detailsfragment();
             if (fragment != null) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -184,6 +190,25 @@ public class Home extends AppCompatActivity
                 ft.commit();
                 // Handle the camera action
             }
+        }
+        if (id == R.id.nav_contacts) {
+            i=new Intent(getApplicationContext(),Add_Contacts.class);
+            startActivity(i);
+         }
+        if (id == R.id.nav_feedback
+                ) {
+            i=new Intent(getApplicationContext(),Contacts.class);
+            startActivity(i);
+        }
+        if (id == R.id.nav_logout) {
+            details=getSharedPreferences("Login", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=details.edit();
+            editor.clear();
+            editor.commit();
+            i=new Intent(getApplicationContext(),MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
         }
             return true;
 

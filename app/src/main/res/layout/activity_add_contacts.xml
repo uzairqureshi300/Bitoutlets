@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/snackbar_view"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+
+                    android:src="@drawable/logo"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="35dp"
+                        android:orientation="vertical">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/input_layout_first_name"
+                            android:layout_width="match_parent"
+
+                            android:layout_height="match_parent">
+                            <EditText
+                                android:id="@+id/input_firstname"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textEmailAddress"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:textAllCaps="false"
+                                android:focusableInTouchMode="true"
+                                android:hint="@string/first_name" />
+                        </android.support.design.widget.TextInputLayout>
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/input_layout_last_name"
+                            android:layout_width="match_parent"
+
+                            android:layout_height="match_parent">
+                            <EditText
+                                android:id="@+id/input_last_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textEmailAddress"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:textAllCaps="false"
+                                android:focusableInTouchMode="true"
+                                android:hint="@string/last_name" />
+                        </android.support.design.widget.TextInputLayout>
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/input_layout_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <EditText
+                                android:id="@+id/input_phone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:textAllCaps="false"
+                                android:focusableInTouchMode="true"
+                                android:hint="@string/phone" />
+                        </android.support.design.widget.TextInputLayout>
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/input_layout_email"
+                            android:layout_width="match_parent"
+                            app:passwordToggleTint="#FFF"
+                            android:layout_height="match_parent">
+
+                            <EditText
+                                android:id="@+id/input_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                  android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:hint="@string/email" />
+                        </android.support.design.widget.TextInputLayout>
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/input_layout_fax"
+                            android:layout_width="match_parent"
+                            app:passwordToggleTint="#FFF"
+                            android:layout_height="match_parent">
+
+                            <EditText
+                                android:id="@+id/input_fax"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:hint="@string/fax" />
+                        </android.support.design.widget.TextInputLayout>
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/input_layout_address"
+                            android:layout_width="match_parent"
+                            app:passwordToggleTint="#FFF"
+                            android:layout_height="match_parent">
+
+                            <EditText
+                                android:id="@+id/input_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:hint="@string/address" />
+                        </android.support.design.widget.TextInputLayout>
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/input_layout_portal"
+                            android:layout_width="match_parent"
+                            app:passwordToggleTint="#FFF"
+                            android:layout_height="match_parent">
+
+                            <EditText
+                                android:id="@+id/input_portal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:hint="@string/portal" />
+                        </android.support.design.widget.TextInputLayout>
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/input_layout_wallet_address"
+                            android:layout_width="match_parent"
+                            app:passwordToggleTint="#FFF"
+                            android:layout_height="match_parent">
+
+                            <EditText
+                                android:id="@+id/input_wallet_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:hint="@string/wallet_address" />
+                        </android.support.design.widget.TextInputLayout>
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/input_layout_created_by"
+                            android:layout_width="match_parent"
+                            app:passwordToggleTint="#FFF"
+                            android:layout_height="match_parent">
+                            <EditText
+                                android:id="@+id/input_created_by"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:hint="@string/created_by" />
+                        </android.support.design.widget.TextInputLayout>
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/input_layout_grade"
+                            android:layout_width="match_parent"
+                            app:passwordToggleTint="#FFF"
+                            android:layout_height="match_parent">
+                            <EditText
+                                android:id="@+id/input_grade"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:hint="@string/grade" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                  <TextView
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_weight="1"/>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/add_contact"
+                        android:text="@string/add_contact_button"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

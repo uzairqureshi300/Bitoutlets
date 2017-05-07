@@ -52,9 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 MainActivity.this,
                 Manifest.permission.READ_CONTACTS))
         {
-
             Toast.makeText(MainActivity.this,"CONTACTS permission allows us to Access CONTACTS app", Toast.LENGTH_LONG).show();
-
         } else {
 
             ActivityCompat.requestPermissions(MainActivity.this,new String[]{
@@ -67,16 +65,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         view.getId();
         switch (view.getId()){
             case R.id.login:
-                try {
-                    Login();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Validation();
 
         }
     }
 
-
+private void Validation(){
+    if(email.getText().toString().equals("") || password.getText().toString().equals("")){
+        Snackbar.make(snack_bar,"enter  username or password",Snackbar.LENGTH_LONG).show();
+    }
+    else{
+        try {
+            Login();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+}
 
 
     private void Login() throws JSONException {
@@ -115,20 +120,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onResponse(JSONObject response) {
         Log.e("RESPONSE",response.toString());
         try {
-            JSONObject getdetails=response.getJSONObject("user_details");
-            Log.e("data",getdetails.toString());
-            details=getSharedPreferences("User_details", Context.MODE_PRIVATE);
-            SharedPreferences.Editor edit=details.edit();
-            edit.putString("name",getdetails.getString("full_name"));
-            edit.putString("email",getdetails.getString("email"));
-            edit.putString("balance",getdetails.getString("balance"));
-            edit.putString("image",getdetails.getString("image"));
-            edit.putString("wallet_address",getdetails.getString("wallet_address"));
-            edit.commit();
+
 
 
             String error = response.getString("error");
             if(error.equals("0")){
+                JSONObject getdetails=response.getJSONObject("user_details");
+                Log.e("data",getdetails.toString());
+                details=getSharedPreferences("User_details", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit=details.edit();
+                edit.putString("name",getdetails.getString("full_name"));
+                edit.putString("email",getdetails.getString("email"));
+                edit.putString("balance",getdetails.getString("balance"));
+                edit.putString("image",getdetails.getString("image"));
+                edit.putString("wallet_address",getdetails.getString("wallet_address"));
+                edit.putString("user_id",getdetails.getString("user_id"));
+
+                edit.commit();
                 Intent i=new Intent(getApplicationContext(),Home.class);
                 startActivity(i);
                 finish();
@@ -148,15 +156,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (RC) {
 
             case RequestPermissionCode:
-
                 if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
-
-
                 } else {
-
                     ActivityCompat.requestPermissions(MainActivity.this,new String[]{
                             Manifest.permission.READ_CONTACTS}, RequestPermissionCode);
-
                 }
                 break;
         }

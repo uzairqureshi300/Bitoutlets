@@ -2,6 +2,17 @@
     <string name="app_name">OurWallet</string>
     <string name="hint_emailaddress">Username</string>
     <string name="hint_password">Password</string>
+    <string name="first_name">Enter First Name</string>
+    <string name="last_name">Enter Last Name</string>
+    <string name="phone">Enter Phone</string>
+    <string name="email">Enter Email</string>
+    <string name="fax">Enter Fax</string>
+    <string name="address">Enter Address</string>
+    <string name="portal">Enter Portal</string>
+    <string name="wallet_address">Enter Wallet Address</string>
+    <string name="grade">Enter Grade</string>
+    <string name="created_by">Created by</string>
+    <string name="add_contact_button">Add</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
