@@ -1,157 +1,198 @@
 package ourwallet.example.com.ourwallet;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ourwallet.example.com.ourwallet.Database.AndroidOpenDbHelper;
 import ourwallet.example.com.ourwallet.Models.Contacts_Model;
+import ourwallet.example.com.ourwallet.RecyclerViewAdapters.Contacts_recyclerView;
+import ourwallet.example.com.ourwallet.RecyclerViewAdapters.SimpleDividerItemDecoration;
 
-public class Contacts extends Activity implements OnClickListener, OnItemClickListener {
+public class Contacts extends AppCompatActivity implements com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener{
+	private Toolbar toolbar;
+	private TextView toolbar_title;
 
-	private ListView uGraduateNamesListView;
-	private Button addNewUndergraduateButton;
-
-	// We need some kind of Adapter to made the connection between ListView UI component and SQLite data set.
-	private ListAdapter uGraduateListAdapter;
-
-	// We need this while we read the query using Cursor and pass data
-	private ArrayList<Contacts_Model> pojoArrayList;
-
-    /** Called when the activity is first created. */
+	private RecyclerView uGraduateNamesListView;
+	private Contacts_recyclerView uGraduateListAdapter;
+	private ArrayList<Contacts_Model> contacts_list;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contacts_list);
+		toolbar=(Toolbar)findViewById(R.id.toolbar);
+		toolbar_title=(TextView)findViewById(R.id.title_toolbar);
+        uGraduateNamesListView = (RecyclerView) findViewById(R.id.contacts_list);
+        contacts_list = new ArrayList<Contacts_Model>();
+	//	uGraduateListAdapter = new Contacts_recyclerView(this, populateList());
+		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+		uGraduateNamesListView.addItemDecoration(new SimpleDividerItemDecoration(this));
+		uGraduateNamesListView.setLayoutManager(mLayoutManager);
+//		uGraduateNamesListView.setAdapter(uGraduateListAdapter);
+		setSupportActionBar(toolbar);
+		final ActionBar ab = getSupportActionBar();
+		ab.setDisplayShowHomeEnabled(true); // show or hide the default home button
+		ab.setDisplayHomeAsUpEnabled(true);
+		ab.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
+		ab.setDisplayShowTitleEnabled(false);
+		toolbar_title.setText("Add Contact");
+		SharedPreferences firsttime_get=getSharedPreferences("1st_time",Context.MODE_PRIVATE);
+		int validate=firsttime_get.getInt("backup",0);
 
-        // Initialize UI components
-        uGraduateNamesListView = (ListView) findViewById(R.id.contacts_list);
-        uGraduateNamesListView.setOnItemClickListener(this);
+			if(validate==1) {
+				uGraduateListAdapter = new Contacts_recyclerView(this, populateList());
+				mLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+				uGraduateNamesListView.addItemDecoration(new SimpleDividerItemDecoration(this));
+				uGraduateNamesListView.setLayoutManager(mLayoutManager);
+				uGraduateNamesListView.setAdapter(uGraduateListAdapter);
 
-//        addNewUndergraduateButton = (Button) findViewById(R.id.namesListViewAddButton);
-//        addNewUndergraduateButton.setOnClickListener(this);
-
-        pojoArrayList = new ArrayList<Contacts_Model>();
-
-        // For the third argument, we need a List that contains Strings.
-        //We decided to display undergraduates names on the ListView.
-        //Therefore we need to create List that contains undergraduates names
-        uGraduateListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, populateList());
-
-        uGraduateNamesListView.setAdapter(uGraduateListAdapter);
-
-    }
-
+			}
+		else{Log.e("2","second bar");
+				try {
+					List();
+					Log.e("1","pehli bar");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+	}
 	@Override
-	public void onClick(View v) {
-//		Intent addNewUndergraduateIntent = new Intent(this, AddNewUndergraduateActivity.class);
-//		startActivity(addNewUndergraduateIntent);
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	public List<Contacts_Model> populateList(){
+		List<String> uGraduateNamesList = new ArrayList<String>();
+		AndroidOpenDbHelper openHelperClass = new AndroidOpenDbHelper(this);
+		SQLiteDatabase sqliteDatabase = openHelperClass.getReadableDatabase();
+		Cursor cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_GPA, null, null, null, null, null, null);
+		startManagingCursor(cursor);
+		while (cursor.moveToNext()) {
+			Log.e("count",cursor.toString());
+			String First_name = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_Name));
+			String Phone = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_number));
+			String Email = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_email));
+			String Fax=cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_fax));
+			String Address=cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_address));
+			String Grade=cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_grade));
+			Contacts_Model ugPojoClass = new Contacts_Model();
+			ugPojoClass.setFirst_name(First_name);
+			ugPojoClass.setPhone(Phone);
+			ugPojoClass.setEmail(Email);
+			ugPojoClass.setFax(Fax);
+			ugPojoClass.setAddress(Address);
+			ugPojoClass.setGrade(Grade);
+			contacts_list.add(ugPojoClass);
+			uGraduateNamesList.add(First_name);
+		}
+		sqliteDatabase.close();
+		return contacts_list;
 	}
 
-	// To create a List that contains undergraduate names, we have to read the SQLite database
-	//We are going to do it in the separate method
-	public List<String> populateList(){
+	private void List() throws JSONException {
+		JSONObject json = new JSONObject();
+		json.put("user_id",Constants.user_id);
+		JSONObject json2 = new JSONObject();
+		json2.put("to","orupartners");
+		json2.put("methods","fetch_contacts");
+		json2.accumulate("complex",json);
+		String url = "http://orupartners.com/cp/redirect_to.php";
+		JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url,json2, this ,this){
 
-		// We have to return a List which contains only String values. Lets create a List first
-		List<String> uGraduateNamesList = new ArrayList<String>();
+		};
+		jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+				5000,
+				DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+				DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+		MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest);
+	}
 
-		// First we need to make contact with the database we have created using the DbHelper class
-		AndroidOpenDbHelper openHelperClass = new AndroidOpenDbHelper(this);
+	@Override
+	public void onErrorResponse(VolleyError error) {
 
-		// Then we need to get a readable database
-		SQLiteDatabase sqliteDatabase = openHelperClass.getReadableDatabase();
+	}
 
-		// We need a a guy to read the database query. Cursor interface will do it for us
-		//(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy)
-		Cursor cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_GPA, null, null, null, null, null, null);
-		// Above given query, read all the columns and fields of the table
+	@Override
+	public void onResponse(JSONObject response) {
+		Log.e("response",response.toString());
+		try {
+			SharedPreferences firsttime_get=getSharedPreferences("1st_time",Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor=firsttime_get.edit();
+			editor.putInt("backup",1);
+			editor.commit();
+			JSONArray array = response.optJSONArray("contacts");
+			for (int i = 0; i < array.length(); i++) {
+				Contacts_Model contacts_model=new Contacts_Model();
+				JSONObject jsonObject = array.getJSONObject(i);
+				contacts_model.setFirst_name(jsonObject.getString("first_name"));
+				contacts_model.setLast_name(jsonObject.getString("last_name"));
+				contacts_model.setFax(jsonObject.getString("fax"));
+				contacts_model.setAddress(jsonObject.getString("address"));
+				contacts_model.setGrade(jsonObject.getString("grade"));
+				contacts_model.setEmail(jsonObject.getString("email"));
+				contacts_model.setPhone(jsonObject.getString("phone"));
+			//	contacts_model.setAddress(jsonObject.getString("city"));
+				contacts_list.add(contacts_model);
+				insert_Contacts(contacts_model);
+			}
+		uGraduateListAdapter = new Contacts_recyclerView(this, contacts_list);
+			RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+			uGraduateNamesListView.addItemDecoration(new SimpleDividerItemDecoration(this));
+			uGraduateNamesListView.setLayoutManager(mLayoutManager);
+		uGraduateNamesListView.setAdapter(uGraduateListAdapter);
 
-		startManagingCursor(cursor);
 
-		// Cursor object read all the fields. So we make sure to check it will not miss any by looping through a while loop
-		while (cursor.moveToNext()) {
-			// In one loop, cursor read one undergraduate all details
-			// Assume, we also need to see all the details of each and every undergraduate
-			// What we have to do is in each loop, read all the values, pass them to the POJO class
-			//and create a ArrayList of undergraduates
-
-			String ugName = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_Name));
-			String ugUniId = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_number));
-			String ugGpa = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_email));
-
-			// Finish reading one raw, now we have to pass them to the POJO
-			Contacts_Model ugPojoClass = new Contacts_Model();
-			ugPojoClass.setFirst_name(ugName);
-			ugPojoClass.setPhone(ugUniId);
-			ugPojoClass.setEmail(ugGpa);
-
-			// Lets pass that POJO to our ArrayList which contains undergraduates as type
-			pojoArrayList.add(ugPojoClass);
-
-			// But we need a List of String to display in the ListView also.
-			//That is why we create "uGraduateNamesList"
-			uGraduateNamesList.add(ugName);
+		}catch (Exception ex){
+			ex.printStackTrace();
 		}
 
-		// If you don't close the database, you will get an error
+
+	}
+	public void insert_Contacts(Contacts_Model contacts_model){
+		AndroidOpenDbHelper androidOpenDbHelperObj = new AndroidOpenDbHelper(this);
+		SQLiteDatabase sqliteDatabase = androidOpenDbHelperObj.getWritableDatabase();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(AndroidOpenDbHelper.Contact_Name, contacts_model.getFirst_name());
+	contentValues.put(AndroidOpenDbHelper.Contact_number, contacts_model.getPhone());
+		contentValues.put(AndroidOpenDbHelper.Contact_email, contacts_model.getEmail());
+		contentValues.put(AndroidOpenDbHelper.Contact_Lname, contacts_model.getLast_name());
+		contentValues.put(AndroidOpenDbHelper.Contact_fax, contacts_model.getFax());
+		contentValues.put(AndroidOpenDbHelper.Contact_address, contacts_model.getAddress());
+		contentValues.put(AndroidOpenDbHelper.Contact_grade, contacts_model.getGrade());
+		long affectedColumnId = sqliteDatabase.insert(AndroidOpenDbHelper.TABLE_NAME_GPA, null, contentValues);
 		sqliteDatabase.close();
-
-		return uGraduateNamesList;
-	}
-
-	// If you don't write the following code, you wont be able to see what you have just insert to the database
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-	}
-
-	// On ListView you just see the name of the undergraduate, not any other details
-	// Here we provide the solution to that. When the user click on a list item, he will redirect to a page where
-	//he can see all the details of the undergraduate
-	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-
-		Toast.makeText(getApplicationContext(), "Clicked on :" + arg2, Toast.LENGTH_SHORT).show();
-
-		// We want to redirect to another Activity when the user click an item on the ListView
-//		Intent updateDeleteUgraduateIntent = new Intent(this, UpdateDeleteUndergraduateActivity.class);
-//
-//		// We have to identify what object, does the user clicked, because we are going to pass only clicked object details to the next activity
-//		// What we are going to do is, get the ID of the clicked item and get the values from the ArrayList which has
-//		//same array id.
-//		UndergraduateDetailsPojo clickedObject =  pojoArrayList.get(arg2);
-//
-//		// We have to bundle the data, which we want to pass to the other activity from this activity
-//		Bundle dataBundle = new Bundle();
-//		dataBundle.putString("clickedUgraduateName", clickedObject.getuGraduateName());
-//		dataBundle.putString("clickedUgraduateUniId", clickedObject.getuGraduateUniId());
-//		dataBundle.putDouble("clickedUgraduateGpa", clickedObject.getuGraduateGpa());
-//
-//		// Attach the bundled data to the intent
-//		updateDeleteUgraduateIntent.putExtras(dataBundle);
-//
-//		// Start the Activity
-//		startActivity(updateDeleteUgraduateIntent);
+	Toast.makeText(this, "Values inserted column ID is :" + affectedColumnId, Toast.LENGTH_SHORT).show();
 
 	}
 }

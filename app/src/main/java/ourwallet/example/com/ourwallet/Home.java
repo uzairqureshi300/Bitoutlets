@@ -37,8 +37,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
+public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
     private Button lock;
     private ImageView profile_image;
     private TextView name,email;
@@ -53,12 +52,7 @@ public class Home extends AppCompatActivity
         setContentView(R.layout.home);
         String string = "lat,chepi";
         String[] parts = string.split(",");
-        String part1 = parts[0]; // 004
-        String part2 = parts[1]; // 034556
         StoreContacts = new ArrayList<String>();
-        Log.e("1",part1);
-        Log.e("2",part2);
-
         details = getSharedPreferences("User_details", Context.MODE_PRIVATE);
         Constants.name=details.getString("name","no name");
         Constants.email=details.getString("email","email");
@@ -104,6 +98,7 @@ public class Home extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
+
         try {
             GetContactsIntoArrayList();
         } catch (JSONException e) {
@@ -164,6 +159,10 @@ public class Home extends AppCompatActivity
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest);
     }
+
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

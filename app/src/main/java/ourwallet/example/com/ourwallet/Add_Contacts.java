@@ -6,8 +6,11 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +38,8 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
     private Contacts_Model contacts_model=new Contacts_Model();
     private ProgressDialog mProgressDialog;
     private View snackbar;
+    private Toolbar toolbar;
+    private TextView toolbar_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +58,18 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
         Created_by=(EditText)findViewById(R.id.input_created_by);
         Grade=(EditText)findViewById(R.id.input_grade);
         add_contact=(Button)findViewById(R.id.add_contact);
+        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        toolbar_title=(TextView)findViewById(R.id.title_toolbar);
         add_contact.setOnClickListener(this);
         Created_by.setText(Constants.name);
        Created_by.setEnabled(false);
+        setSupportActionBar(toolbar);
+        final ActionBar ab = getSupportActionBar();
+        ab.setDisplayShowHomeEnabled(true); // show or hide the default home button
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
+        ab.setDisplayShowTitleEnabled(false);
+        toolbar_title.setText("Add Contact");
 
     }
     @Override
@@ -84,7 +98,6 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
     }
 
     }
-
 
     private void Add_Contact() throws JSONException {
         showProgressDialog();
@@ -184,6 +197,17 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
             ex.printStackTrace();
         }
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     public void insert_Contacts(Contacts_Model contacts_model){
 
         // First we have to open our DbHelper class by creating a new object of that
@@ -200,6 +224,12 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
         contentValues.put(AndroidOpenDbHelper.Contact_Name, contacts_model.getFirst_name());
         contentValues.put(AndroidOpenDbHelper.Contact_number, contacts_model.getPhone());
         contentValues.put(AndroidOpenDbHelper.Contact_email, contacts_model.getEmail());
+        contentValues.put(AndroidOpenDbHelper.Contact_Lname, contacts_model.getLast_name());
+        contentValues.put(AndroidOpenDbHelper.Contact_fax, contacts_model.getFax());
+        contentValues.put(AndroidOpenDbHelper.Contact_address, contacts_model.getAddress());
+        contentValues.put(AndroidOpenDbHelper.Contact_grade, contacts_model.getGrade());
+
+
 
         // Now we can insert the data in to relevant table
         // I am going pass the id value, which is going to change because of our insert method, to a long variable to show in Toast
