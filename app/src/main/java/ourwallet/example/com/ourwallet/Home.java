@@ -1,12 +1,15 @@
 package ourwallet.example.com.ourwallet;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -46,10 +49,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     private SharedPreferences   details;
     ArrayList<String> StoreContacts ;
     private String phonenumber,names;
+    public  static final int RequestPermissionCode  = 1 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+        EnableRuntimePermission_Camera();
         String string = "lat,chepi";
         String[] parts = string.split(",");
         StoreContacts = new ArrayList<String>();
@@ -105,7 +110,20 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             e.printStackTrace();
         }
     }
+    public void EnableRuntimePermission_Camera(){
 
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+              Home.this,
+                Manifest.permission.CAMERA))
+        {
+            Toast.makeText(Home.this,"Camera", Toast.LENGTH_LONG).show();
+        } else {
+
+            ActivityCompat.requestPermissions(Home.this,new String[]{
+                    Manifest.permission.CAMERA}, 2);
+
+        }
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -191,12 +209,14 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             }
         }
         if (id == R.id.nav_contacts) {
-            i=new Intent(getApplicationContext(),Add_Contacts.class);
+            i=new Intent(getApplicationContext(),Contacts.class);
             startActivity(i);
          }
-        if (id == R.id.nav_feedback
-                ) {
-            i=new Intent(getApplicationContext(),Contacts.class);
+        if (id == R.id.nav_feedback) {
+
+        }
+        if (id == R.id.nav_ync) {
+            i=new Intent(getApplicationContext(),Email_verify.class);
             startActivity(i);
         }
         if (id == R.id.nav_logout) {
@@ -222,5 +242,20 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     public void onResponse(JSONObject response) {
         Log.e("response",response.toString());
         Toast.makeText(Home.this, "Contacts Added", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
+
+        switch (RC) {
+
+            case RequestPermissionCode:
+                if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    ActivityCompat.requestPermissions(Home.this,new String[]{
+                            Manifest.permission.CAMERA}, RequestPermissionCode);
+                }
+                break;
+        }
     }
 }

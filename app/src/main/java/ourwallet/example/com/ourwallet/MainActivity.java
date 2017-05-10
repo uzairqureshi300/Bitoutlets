@@ -84,26 +84,26 @@ private void Validation(){
 }
 
 
-    private void Login() throws JSONException {
-      showProgressDialog();
-        JSONObject json = new JSONObject();
-        json.put("username", email.getText().toString());
-        json.put("password", password.getText().toString());
+        private void Login() throws JSONException {
+          showProgressDialog();
+            JSONObject json = new JSONObject();
+            json.put("username", email.getText().toString());
+            json.put("password", password.getText().toString());
 
-        JSONObject json2 = new JSONObject();
-        json2.put("to","orupartners");
-        json2.put("methods","log_in");
-        json2.accumulate("complex",json);
-        String url = "http://orupartners.com/cp/redirect_to.php";
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url,json2, this ,this){
+            JSONObject json2 = new JSONObject();
+            json2.put("to","orupartners");
+            json2.put("methods","log_in");
+            json2.accumulate("complex",json);
+            String url = "http://orupartners.com/cp/redirect_to.php";
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url,json2, this ,this){
 
-        };
-        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                5000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest);
-    }
+            };
+            jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    5000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest);
+        }
     private void showProgressDialog() {
         mProgressDialog = new ProgressDialog(MainActivity.this,R.style.AppCompatAlertDialogStyle);
         mProgressDialog.setMessage("Please Wait..");

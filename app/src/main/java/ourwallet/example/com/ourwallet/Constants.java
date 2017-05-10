@@ -18,6 +18,7 @@ public class Constants {
     public static String balance ="";
     public  static String adress="";
     public  static String user_id="";
+    public  static String code="";
 
 
 }

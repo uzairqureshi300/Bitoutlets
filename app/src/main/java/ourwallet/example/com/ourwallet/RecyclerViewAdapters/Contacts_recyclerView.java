@@ -19,10 +19,16 @@ import ourwallet.example.com.ourwallet.R;
  * Created by uzair on 09/05/2017.
  */
 
-public class Contacts_recyclerView extends RecyclerView.Adapter<Contacts_recyclerView.MyViewHolder> {
+public class Contacts_recyclerView extends RecyclerView.Adapter<Contacts_recyclerView.MyViewHolder> implements View.OnClickListener {
 
     private List<Contacts_Model> horizontalList=new ArrayList<Contacts_Model>();
     private Context context;
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView txtView;
         public TextView phone;

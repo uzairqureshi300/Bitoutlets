@@ -15,6 +15,10 @@
             android:icon="@drawable/configure_icon"
             android:title="Configure Portals" />
         <item
+            android:id="@+id/nav_ync"
+            android:icon="@drawable/feedback_icon"
+            android:title="YNC" />
+        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/setting_icon"
             android:title="Settings" />

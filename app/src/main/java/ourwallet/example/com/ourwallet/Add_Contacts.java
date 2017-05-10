@@ -57,7 +57,7 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
         Wallet_Address=(EditText)findViewById(R.id.input_wallet_address);
         Created_by=(EditText)findViewById(R.id.input_created_by);
         Grade=(EditText)findViewById(R.id.input_grade);
-        add_contact=(Button)findViewById(R.id.add_contact);
+        add_contact=(Button)findViewById(R.id.ad_contact);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         toolbar_title=(TextView)findViewById(R.id.title_toolbar);
         add_contact.setOnClickListener(this);
@@ -76,7 +76,7 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         view.getId();
         switch (view.getId()){
-            case R.id.add_contact:
+            case R.id.ad_contact:
                 validation();
 
         }
@@ -208,6 +208,14 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+
+        super.onBackPressed();
+    }
+
     public void insert_Contacts(Contacts_Model contacts_model){
 
         // First we have to open our DbHelper class by creating a new object of that

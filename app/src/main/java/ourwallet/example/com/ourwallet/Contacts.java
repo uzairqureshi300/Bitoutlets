@@ -2,9 +2,11 @@ package ourwallet.example.com.ourwallet;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,15 +37,19 @@ import java.util.List;
 import ourwallet.example.com.ourwallet.Database.AndroidOpenDbHelper;
 import ourwallet.example.com.ourwallet.Models.Contacts_Model;
 import ourwallet.example.com.ourwallet.RecyclerViewAdapters.Contacts_recyclerView;
+import ourwallet.example.com.ourwallet.RecyclerViewAdapters.RecyclerItemClickListener;
 import ourwallet.example.com.ourwallet.RecyclerViewAdapters.SimpleDividerItemDecoration;
 
-public class Contacts extends AppCompatActivity implements com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener{
+public class Contacts extends AppCompatActivity implements com.android.volley.Response.Listener<JSONObject>,
+		com.android.volley.Response.ErrorListener, View.OnClickListener,AdapterView.OnItemClickListener{
 	private Toolbar toolbar;
 	private TextView toolbar_title;
-
+	private ImageView btn_addcontact,btn_sync;
 	private RecyclerView uGraduateNamesListView;
 	private Contacts_recyclerView uGraduateListAdapter;
 	private ArrayList<Contacts_Model> contacts_list;
+	Cursor cursor;
+	SQLiteDatabase sqliteDatabase;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +57,14 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 		toolbar=(Toolbar)findViewById(R.id.toolbar);
 		toolbar_title=(TextView)findViewById(R.id.title_toolbar);
         uGraduateNamesListView = (RecyclerView) findViewById(R.id.contacts_list);
-        contacts_list = new ArrayList<Contacts_Model>();
-	//	uGraduateListAdapter = new Contacts_recyclerView(this, populateList());
-		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-		uGraduateNamesListView.addItemDecoration(new SimpleDividerItemDecoration(this));
-		uGraduateNamesListView.setLayoutManager(mLayoutManager);
-//		uGraduateNamesListView.setAdapter(uGraduateListAdapter);
+   		btn_addcontact=(ImageView)findViewById(R.id.add_contact);
+		btn_sync=(ImageView)findViewById(R.id.syncronize);
+
+		btn_addcontact.setVisibility(View.VISIBLE);
+		btn_sync.setVisibility(View.VISIBLE);
+		btn_addcontact.setOnClickListener(this);
+		btn_sync.setOnClickListener(this);
+		contacts_list = new ArrayList<Contacts_Model>();
 		setSupportActionBar(toolbar);
 		final ActionBar ab = getSupportActionBar();
 		ab.setDisplayShowHomeEnabled(true); // show or hide the default home button
@@ -61,25 +72,9 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 		ab.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
 		ab.setDisplayShowTitleEnabled(false);
 		toolbar_title.setText("Add Contact");
-		SharedPreferences firsttime_get=getSharedPreferences("1st_time",Context.MODE_PRIVATE);
-		int validate=firsttime_get.getInt("backup",0);
 
-			if(validate==1) {
-				uGraduateListAdapter = new Contacts_recyclerView(this, populateList());
-				mLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-				uGraduateNamesListView.addItemDecoration(new SimpleDividerItemDecoration(this));
-				uGraduateNamesListView.setLayoutManager(mLayoutManager);
-				uGraduateNamesListView.setAdapter(uGraduateListAdapter);
 
-			}
-		else{Log.e("2","second bar");
-				try {
-					List();
-					Log.e("1","pehli bar");
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
+
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -95,8 +90,10 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 	public List<Contacts_Model> populateList(){
 		List<String> uGraduateNamesList = new ArrayList<String>();
 		AndroidOpenDbHelper openHelperClass = new AndroidOpenDbHelper(this);
-		SQLiteDatabase sqliteDatabase = openHelperClass.getReadableDatabase();
-		Cursor cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_GPA, null, null, null, null, null, null);
+
+		sqliteDatabase = openHelperClass.getReadableDatabase();
+
+		cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_GPA, null, null, null, null, null, null);
 		startManagingCursor(cursor);
 		while (cursor.moveToNext()) {
 			Log.e("count",cursor.toString());
@@ -116,7 +113,7 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 			contacts_list.add(ugPojoClass);
 			uGraduateNamesList.add(First_name);
 		}
-		sqliteDatabase.close();
+//		sqliteDatabase.close();
 		return contacts_list;
 	}
 
@@ -172,6 +169,16 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 			uGraduateNamesListView.setLayoutManager(mLayoutManager);
 		uGraduateNamesListView.setAdapter(uGraduateListAdapter);
 
+			uGraduateNamesListView.addOnItemTouchListener(
+					new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
+						@Override
+						public void onItemClick(View view, int i) {
+							Toast.makeText(Contacts.this, i, Toast.LENGTH_SHORT).show();
+						}
+					})
+			);
+
+
 
 		}catch (Exception ex){
 			ex.printStackTrace();
@@ -191,8 +198,53 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 		contentValues.put(AndroidOpenDbHelper.Contact_address, contacts_model.getAddress());
 		contentValues.put(AndroidOpenDbHelper.Contact_grade, contacts_model.getGrade());
 		long affectedColumnId = sqliteDatabase.insert(AndroidOpenDbHelper.TABLE_NAME_GPA, null, contentValues);
-		sqliteDatabase.close();
+//		sqliteDatabase.close();
 	Toast.makeText(this, "Values inserted column ID is :" + affectedColumnId, Toast.LENGTH_SHORT).show();
 
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		Toast.makeText(Contacts.this, "Stop", Toast.LENGTH_SHORT).show();
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		populateList().clear();
+			SharedPreferences firsttime_get=getSharedPreferences("1st_time",Context.MODE_PRIVATE);
+		int validate=firsttime_get.getInt("backup",0);
+
+		if(validate==1) {
+			uGraduateListAdapter = new Contacts_recyclerView(this, populateList());
+			RecyclerView.LayoutManager		mLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+			uGraduateNamesListView.addItemDecoration(new SimpleDividerItemDecoration(this));
+			uGraduateNamesListView.setLayoutManager(mLayoutManager);
+			uGraduateNamesListView.setAdapter(uGraduateListAdapter);
+
+		}
+		else{Log.e("2","second bar");
+			try {
+				List();
+				Log.e("1","pehli bar");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.add_contact:
+
+				Intent i=new Intent(getApplicationContext(),Add_Contacts.class);
+				startActivity(i);
+		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+		Toast.makeText(Contacts.this, i, Toast.LENGTH_SHORT).show();
 	}
 }

@@ -190,7 +190,7 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/add_contact"
+                        android:id="@+id/ad_contact"
                         android:text="@string/add_contact_button"
                         android:layout_weight="1"/>
                     <TextView
