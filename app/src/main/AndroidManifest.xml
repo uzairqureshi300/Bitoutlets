@@ -32,6 +32,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Email_verify"
             android:screenOrientation="portrait"/>
+        <activity android:name=".Contacts_detail"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

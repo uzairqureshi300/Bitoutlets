@@ -50,8 +50,9 @@ public class Contacts_recyclerView extends RecyclerView.Adapter<Contacts_recycle
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.contacts_view_items, parent, false);
+        MyViewHolder holder = new MyViewHolder(itemView);
 
-        return new MyViewHolder(itemView);
+        return holder;
     }
 
     @Override
@@ -61,7 +62,7 @@ public class Contacts_recyclerView extends RecyclerView.Adapter<Contacts_recycle
         holder.txtView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,holder.txtView.getText().toString(),Toast.LENGTH_SHORT).show();
+               // Toast.makeText(context,holder.txtView.getText().toString(),Toast.LENGTH_SHORT).show();
             }
         });
     }

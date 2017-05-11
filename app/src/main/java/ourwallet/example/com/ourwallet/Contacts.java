@@ -1,5 +1,6 @@
 package ourwallet.example.com.ourwallet;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -46,6 +47,7 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 	private TextView toolbar_title;
 	private ImageView btn_addcontact,btn_sync;
 	private RecyclerView uGraduateNamesListView;
+	private ProgressDialog mProgressDialog;
 	private Contacts_recyclerView uGraduateListAdapter;
 	private ArrayList<Contacts_Model> contacts_list;
 	Cursor cursor;
@@ -76,6 +78,13 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 
 
 	}
+	private void showProgressDialog() {
+		mProgressDialog = new ProgressDialog(Contacts.this,R.style.AppCompatAlertDialogStyle);
+		mProgressDialog.setMessage("Please Wait..");
+		mProgressDialog.setCancelable(false);
+		mProgressDialog.show();
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -99,6 +108,7 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 			Log.e("count",cursor.toString());
 			String First_name = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_Name));
 			String Phone = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_number));
+			String last_name = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_Lname));
 			String Email = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_email));
 			String Fax=cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_fax));
 			String Address=cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_address));
@@ -108,6 +118,7 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 			ugPojoClass.setPhone(Phone);
 			ugPojoClass.setEmail(Email);
 			ugPojoClass.setFax(Fax);
+			ugPojoClass.setLast_name(last_name);
 			ugPojoClass.setAddress(Address);
 			ugPojoClass.setGrade(Grade);
 			contacts_list.add(ugPojoClass);
@@ -118,6 +129,7 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 	}
 
 	private void List() throws JSONException {
+		showProgressDialog();
 		JSONObject json = new JSONObject();
 		json.put("user_id",Constants.user_id);
 		JSONObject json2 = new JSONObject();
@@ -144,6 +156,7 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 	public void onResponse(JSONObject response) {
 		Log.e("response",response.toString());
 		try {
+			mProgressDialog.dismiss();
 			SharedPreferences firsttime_get=getSharedPreferences("1st_time",Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor=firsttime_get.edit();
 			editor.putInt("backup",1);
@@ -173,7 +186,15 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 					new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
 						@Override
 						public void onItemClick(View view, int i) {
-							Toast.makeText(Contacts.this, i, Toast.LENGTH_SHORT).show();
+							Intent intent=new Intent(getApplicationContext(),Contacts_detail.class);
+							intent.putExtra("f_name",populateList().get(i).getFirst_name());
+							intent.putExtra("l_name",populateList().get(i).getLast_name());
+							intent.putExtra("number",populateList().get(i).getPhone());
+							intent.putExtra("email",populateList().get(i).getEmail());
+							intent.putExtra("fax",populateList().get(i).getFax());
+							intent.putExtra("address",populateList().get(i).getAddress());
+							intent.putExtra("grade",populateList().get(i).getGrade());
+							startActivity(intent);
 						}
 					})
 			);
@@ -199,7 +220,7 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 		contentValues.put(AndroidOpenDbHelper.Contact_grade, contacts_model.getGrade());
 		long affectedColumnId = sqliteDatabase.insert(AndroidOpenDbHelper.TABLE_NAME_GPA, null, contentValues);
 //		sqliteDatabase.close();
-	Toast.makeText(this, "Values inserted column ID is :" + affectedColumnId, Toast.LENGTH_SHORT).show();
+//	Toast.makeText(this, "Values inserted column ID is :" + affectedColumnId, Toast.LENGTH_SHORT).show();
 
 	}
 
@@ -221,9 +242,25 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 			uGraduateNamesListView.addItemDecoration(new SimpleDividerItemDecoration(this));
 			uGraduateNamesListView.setLayoutManager(mLayoutManager);
 			uGraduateNamesListView.setAdapter(uGraduateListAdapter);
+			uGraduateNamesListView.addOnItemTouchListener(
+					new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
+						@Override
+						public void onItemClick(View view, int i) {
+							Intent intent=new Intent(getApplicationContext(),Contacts_detail.class);
+							intent.putExtra("f_name",populateList().get(i).getFirst_name());
+							intent.putExtra("l_name",populateList().get(i).getLast_name());
+							intent.putExtra("number",populateList().get(i).getPhone());
+							intent.putExtra("email",populateList().get(i).getEmail());
+							intent.putExtra("fax",populateList().get(i).getFax());
+							intent.putExtra("address",populateList().get(i).getAddress());
+							intent.putExtra("grade",populateList().get(i).getGrade());
+							startActivity(intent);
+						}
+					})
+			);
 
 		}
-		else{Log.e("2","second bar");
+		else{
 			try {
 				List();
 				Log.e("1","pehli bar");

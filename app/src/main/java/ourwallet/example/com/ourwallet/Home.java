@@ -120,7 +120,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         } else {
 
             ActivityCompat.requestPermissions(Home.this,new String[]{
-                    Manifest.permission.CAMERA}, 2);
+                    Manifest.permission.CAMERA}, 1);
 
         }
     }
