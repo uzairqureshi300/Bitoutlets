@@ -57,11 +57,12 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contacts_list);
 		toolbar=(Toolbar)findViewById(R.id.toolbar);
+
 		toolbar_title=(TextView)findViewById(R.id.title_toolbar);
         uGraduateNamesListView = (RecyclerView) findViewById(R.id.contacts_list);
    		btn_addcontact=(ImageView)findViewById(R.id.add_contact);
 		btn_sync=(ImageView)findViewById(R.id.syncronize);
-
+			toolbar.setBackgroundColor(getResources().getColor(R.color.toolbar_color));
 		btn_addcontact.setVisibility(View.VISIBLE);
 		btn_sync.setVisibility(View.VISIBLE);
 		btn_addcontact.setOnClickListener(this);
@@ -224,11 +225,7 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 
 	}
 
-	@Override
-	protected void onStop() {
-		super.onStop();
-		Toast.makeText(Contacts.this, "Stop", Toast.LENGTH_SHORT).show();
-	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();

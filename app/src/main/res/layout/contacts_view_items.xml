@@ -16,7 +16,7 @@
             android:layout_weight="1.9"/>
 
         <TextView
-            android:textColor="#000"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:text="kmsdmd"
             android:layout_weight="1"
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="#000"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:id="@+id/phone"
             android:gravity="right"

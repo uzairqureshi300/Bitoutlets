@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:focusableInTouchMode="true"
+    android:background="@drawable/contacts_bg"
     android:fitsSystemWindows="true"
     >
     <include layout="@layout/toolbar"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/contacts_list"
-        android:background="#fff"
         android:layout_weight="1"
         android:padding="10dp"
         android:scrollbars="vertical"

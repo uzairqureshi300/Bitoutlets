@@ -103,11 +103,18 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
+        SharedPreferences contacts=getSharedPreferences("get_contacts",Context.MODE_PRIVATE);
+        int a=contacts.getInt("one_time_contacts",0);
+        if(a==0) {
 
-        try {
-            GetContactsIntoArrayList();
-        } catch (JSONException e) {
-            e.printStackTrace();
+            try {
+                GetContactsIntoArrayList();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+
         }
     }
     public void EnableRuntimePermission_Camera(){
@@ -135,6 +142,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     public void GetContactsIntoArrayList() throws JSONException {
+        SharedPreferences contacts=getSharedPreferences("get_contacts",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=contacts.edit();
+        editor.putInt("one_time_contacts",1);
+        editor.commit();
 
         cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null, null, null);
       //  name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
@@ -150,6 +161,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
     private void Login() throws JSONException {
+
+
         Log.e("NAmes", String.valueOf(new JSONArray(StoreContacts)));
         JSONObject json = new JSONObject();
         for (int i = 0; i < StoreContacts.size(); i++) {

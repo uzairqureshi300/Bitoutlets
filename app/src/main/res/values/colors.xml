@@ -7,6 +7,7 @@
     <color name="black">#000</color>
 
     <color name="graycol">#e5e5e5</color>
+    <color name="toolbar_color">#e6e6e6</color>
 
     <color name="button_cream">#c0c0c0</color>
 </resources>
