@@ -71,7 +71,7 @@ public class Email_verify extends AppCompatActivity implements com.android.volle
         photo_id_type=(EditText)findViewById(R.id.input_national_id);
         photo_id_number=(EditText)findViewById(R.id.input_photo_id_number);
         expiration_date=(EditText)findViewById(R.id.input_epiry_date);
-        btn_verify_photo=(Button)findViewById(R.id.verify);
+        btn_verify_photo=(Button)findViewById(R.id.verify_photo);
         upload_photo=(ImageView)findViewById(R.id.upload_image);
         snack_view=(View)findViewById(R.id.snack);
         btn_verify.setOnClickListener(this);
@@ -198,14 +198,41 @@ public class Email_verify extends AppCompatActivity implements com.android.volle
                     }
 
                     break;
+                case "photo_verify":
+                    Log.e("photo_response",response.toString());
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+}
+    private void verify_photo() throws JSONException {
+        type="photo_verify";
+        JSONObject json = new JSONObject();
+        Toast.makeText(Email_verify.this, profile_image, Toast.LENGTH_SHORT).show();
+        json.put("images", profile_image);
 
 
+        JSONObject json2 = new JSONObject();
+        json2.put("to","orupartners");
+        json2.put("methods","photo_request");
+        json2.accumulate("complex",json);
+        String url = "http://orupartners.com/cp/redirect_to.php";
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url,json2, this ,this){
+
+        };
+        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest);
     }
+
+
+
+
+
+
     private void verify(String code) throws JSONException {
         Log.e("code",code);
         JSONObject json = new JSONObject();
@@ -260,8 +287,18 @@ public class Email_verify extends AppCompatActivity implements com.android.volle
                        break;
                }
                break;
+
            case R.id.upload_image:
                selectImage();
+               break;
+           case R.id.verify_photo:
+
+               try {
+                   verify_photo();
+               } catch (JSONException e) {
+                   e.printStackTrace();
+               }
+               break;
        }
 
     }

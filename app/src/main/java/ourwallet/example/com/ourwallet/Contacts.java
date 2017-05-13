@@ -62,7 +62,7 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
         uGraduateNamesListView = (RecyclerView) findViewById(R.id.contacts_list);
    		btn_addcontact=(ImageView)findViewById(R.id.add_contact);
 		btn_sync=(ImageView)findViewById(R.id.syncronize);
-			toolbar.setBackgroundColor(getResources().getColor(R.color.toolbar_color));
+		//	toolbar.setBackgroundColor(getResources().getColor(R.color.toolbar_color));
 		btn_addcontact.setVisibility(View.VISIBLE);
 		btn_sync.setVisibility(View.VISIBLE);
 		btn_addcontact.setOnClickListener(this);
@@ -102,7 +102,6 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 		AndroidOpenDbHelper openHelperClass = new AndroidOpenDbHelper(this);
 
 		sqliteDatabase = openHelperClass.getReadableDatabase();
-
 		cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_GPA, null, null, null, null, null, null);
 		startManagingCursor(cursor);
 		while (cursor.moveToNext()) {

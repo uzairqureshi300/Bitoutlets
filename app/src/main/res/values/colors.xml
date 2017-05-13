@@ -5,7 +5,7 @@
     <color name="colorAccent">#fff</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
-
+    <color name="colorEditText">#ff6666</color>
     <color name="graycol">#e5e5e5</color>
     <color name="toolbar_color">#e6e6e6</color>
 

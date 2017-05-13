@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/graycol"
+   >
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="KYC Info"
+    android:gravity="center"
+    android:background="@color/white"
+    android:textSize="25dp"
+    android:textStyle="bold"
+    android:layout_weight="1.2"
+    android:textColor="@color/black"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:padding="10dp"
+      android:layout_weight="1.05">
+     <TextView
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:textColor="@color/white"
+         android:gravity="center"
+         android:layout_weight="1"
+         android:textSize="20dp"
+         android:background="@color/colorPrimary"
+         android:text="Mobile Verifiation"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_height="match_parent"
+
+        android:layout_weight="1">
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_weight="2.5"/>
+     <TextView
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:textColor="@color/white"
+         android:layout_weight="2"
+         android:textSize="20dp"
+         android:text="Status"/>
+
+     <TextView
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_weight="0.8"
+         android:textColor="@color/white"
+         android:textSize="17dp"
+         android:text="verified"/>
+
+
+    </LinearLayout>
+
+  </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_weight="1.05">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="Email Verifiation"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2.5"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:layout_weight="2"
+                android:textSize="20dp"
+                android:text="Status"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:textColor="@color/white"
+                android:textSize="17dp"
+                android:text="verified"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_weight="1.05">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="Phone Verifiation"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:text="Status"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:text="phone identification verified"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_weight="1.05">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="Address Verifiation"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:text="Status"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:text="phone identification verified"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.1"></LinearLayout>
+</LinearLayout>

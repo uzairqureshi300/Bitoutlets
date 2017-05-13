@@ -77,8 +77,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         lock=(Button)findViewById(R.id.lock);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -241,6 +240,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
             finish();
+        }
+        if(id==R.id.nav_profile){
+            i=new Intent(getApplicationContext(),Profile_Manage.class);
+            startActivity(i);
+            finish();
+
         }
             return true;
 

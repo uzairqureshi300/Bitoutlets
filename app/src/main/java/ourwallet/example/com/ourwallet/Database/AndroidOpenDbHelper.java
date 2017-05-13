@@ -45,6 +45,9 @@ public class AndroidOpenDbHelper extends SQLiteOpenHelper {
 				+ Contact_email + " real not null);";
 		// Execute a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
 		db.execSQL(sqlQueryToCreateUndergraduateDetailsTable);
+
+
+
 	}
 
 	// onUpgrade method is use when we need to upgrade the database in to a new version
