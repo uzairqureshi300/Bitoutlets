@@ -228,7 +228,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         }
         if (id == R.id.nav_ync) {
-            i=new Intent(getApplicationContext(),Email_verify.class);
+            i=new Intent(getApplicationContext(),YMC.class);
             startActivity(i);
         }
         if (id == R.id.nav_logout) {
@@ -239,7 +239,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             i=new Intent(getApplicationContext(),MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
-            finish();
+
         }
         if(id==R.id.nav_profile){
             i=new Intent(getApplicationContext(),Profile_Manage.class);

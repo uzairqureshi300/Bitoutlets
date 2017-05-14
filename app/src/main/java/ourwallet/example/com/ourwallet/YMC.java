@@ -1,49 +1,43 @@
 package ourwallet.example.com.ourwallet;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
+import android.Manifest;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import ourwallet.example.com.ourwallet.Profile_fragments.Contact_info;
 import ourwallet.example.com.ourwallet.Profile_fragments.Kyc_info;
 import ourwallet.example.com.ourwallet.Profile_fragments.Login_info;
 import ourwallet.example.com.ourwallet.ViewPager.ViewPagerAdapter;
+import ourwallet.example.com.ourwallet.YMC_fragments.Address_verification_fragment;
+import ourwallet.example.com.ourwallet.YMC_fragments.Email_verification_fragment;
+import ourwallet.example.com.ourwallet.YMC_fragments.Photo_verification_fragment;
 
-public class Profile_Manage extends AppCompatActivity implements com.android.volley.Response.Listener<JSONObject>,
+public class YMC extends AppCompatActivity implements com.android.volley.Response.Listener<JSONObject>,
         com.android.volley.Response.ErrorListener,View.OnClickListener {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     User_detailsfragment afterMarketFragment;
+    public  static final int RequestPermissionCode  = 1 ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_manage);
+        EnableRuntimePermission();
         viewPager = (ViewPager) findViewById(R.id.viewpager_parts_list);
         tabLayout = (TabLayout) findViewById(R.id.tabs_parts_list);
         SetToolbar();
@@ -52,12 +46,25 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
         tabLayout.setupWithViewPager(viewPager);
 
     }
+    public void EnableRuntimePermission(){
 
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                YMC.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE))
+        {
+            Toast.makeText(YMC.this,"CONTACTS permission allows us to Access CONTACTS app", Toast.LENGTH_LONG).show();
+        } else {
+
+            ActivityCompat.requestPermissions(YMC.this,new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE}, RequestPermissionCode);
+
+        }
+    }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Contact_info(), "Contact Info");
-        adapter.addFragment(new Kyc_info(), "KYC Info");
-        adapter.addFragment(new Login_info(), "Login Info");
+        adapter.addFragment(new Email_verification_fragment(), "Email Verification");
+        adapter.addFragment(new Photo_verification_fragment(), "Photo Verification");
+        adapter.addFragment(new Address_verification_fragment(), "Address Verification");
 
 
         viewPager.setAdapter(adapter);
@@ -79,7 +86,7 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
     private void SetToolbar() {
         Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
         TextView homeTitle = (TextView) findViewById(R.id.title_toolbar);
-        homeTitle.setText("Profile");
+        homeTitle.setText("KYC");
 
 
         setSupportActionBar(tb);

@@ -55,7 +55,7 @@ public class Email_verify extends AppCompatActivity implements com.android.volle
    private EditText email_verify_text,photo_id_type,photo_id_number,expiration_date;
     private ImageView upload_photo;
     private String type="sent mail";
-    private Button btn_verify,btn_verify_photo;
+    private Button btn_verify,btn_verify_photo,btn_verify_address;
     private String profile_image;
     private Bitmap bitmap , resized;
     public  static final int RequestPermissionCode  = 1 ;
@@ -73,10 +73,12 @@ public class Email_verify extends AppCompatActivity implements com.android.volle
         expiration_date=(EditText)findViewById(R.id.input_epiry_date);
         btn_verify_photo=(Button)findViewById(R.id.verify_photo);
         upload_photo=(ImageView)findViewById(R.id.upload_image);
+        btn_verify_address=(Button)findViewById(R.id.verify_address);
         snack_view=(View)findViewById(R.id.snack);
         btn_verify.setOnClickListener(this);
         btn_verify_photo.setOnClickListener(this);
         upload_photo.setOnClickListener(this);
+        btn_verify_address.setOnClickListener(this);
 
 
 
@@ -206,12 +208,46 @@ public class Email_verify extends AppCompatActivity implements com.android.volle
             e.printStackTrace();
         }
 }
+    private void verify_address() throws JSONException {
+        type="address_verify";
+        JSONObject json = new JSONObject();
+        Toast.makeText(Email_verify.this, profile_image, Toast.LENGTH_SHORT).show();
+        json.put("images", profile_image);
+        json.put("photo_type", "used");
+        json.put("address_1","Karachi");
+        json.put("address_2","Islamabad");
+        json.put("country","Pakistan");
+        json.put("state","Punjab");
+        json.put("city","Rawaloindi");
+        json.put("issuance","1987-03-23 02:34:34");
+        json.put("user_id",Constants.user_id);
+
+
+        JSONObject json2 = new JSONObject();
+        json2.put("to","orupartners");
+        json2.put("methods","address_request");
+        json2.accumulate("complex",json);
+        String url = "http://orupartners.com/cp/redirect_to.php";
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url,json2, this ,this){
+
+        };
+        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest);
+    }
+
+
     private void verify_photo() throws JSONException {
         type="photo_verify";
         JSONObject json = new JSONObject();
         Toast.makeText(Email_verify.this, profile_image, Toast.LENGTH_SHORT).show();
         json.put("images", profile_image);
-
+        json.put("photo_type", "used");
+        json.put("photo_id","23333");
+        json.put("user_id",Constants.user_id);
+        json.put("photo_expiration", "1987-03-23 02:34:34");
 
         JSONObject json2 = new JSONObject();
         json2.put("to","orupartners");
@@ -299,6 +335,12 @@ public class Email_verify extends AppCompatActivity implements com.android.volle
                    e.printStackTrace();
                }
                break;
+           case R.id.verify_address:
+               try {
+                   verify_address();
+               } catch (JSONException e) {
+                   e.printStackTrace();
+               }
        }
 
     }
