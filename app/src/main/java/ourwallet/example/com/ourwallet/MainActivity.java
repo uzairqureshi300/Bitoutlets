@@ -135,6 +135,19 @@ private void Validation(){
                 edit.putString("image",getdetails.getString("image"));
                 edit.putString("wallet_address",getdetails.getString("wallet_address"));
                 edit.putString("user_id",getdetails.getString("user_id"));
+                edit.putString("mobile_verified",getdetails.getString("mobile_verified"));
+                edit.putString("email_verified",getdetails.getString("email_verified"));
+                edit.putString("address_verified",getdetails.getString("address_verified"));
+                edit.putString("status",getdetails.getString("status"));
+                edit.putString("password",getdetails.getString("password"));
+                edit.putString("full_name",getdetails.getString("full_name"));
+                edit.putString("country",getdetails.getString("country"));
+                edit.putString("city",getdetails.getString("city"));
+                edit.putString("username",getdetails.getString("username"));
+                edit.putString("phone",getdetails.getString("phone"));
+                edit.putString("address",getdetails.getString("address"));
+                edit.putString("address2",getdetails.getString("address2"));
+
 
                 edit.commit();
                 Intent i=new Intent(getApplicationContext(),Home.class);

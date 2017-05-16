@@ -19,6 +19,22 @@ public class Constants {
     public  static String adress="";
     public  static String user_id="";
     public  static String code="";
+    public  static String mobile_verified="";
+    public  static String email_verified="";
+    public  static String address_verified="";
+    public  static String status="";
+    public  static String password="";
+    public  static String full_name="";
+    public  static String country="";
+    public  static String city="";
+    public  static String username="";
+    public  static String phone_number="";
+    public  static String address1="";
+    public  static String address2="";
+    public  static String varification_email="";
+    public  static String verification_mobile="";
+    public  static String verification_address="";
+
 
 
 }

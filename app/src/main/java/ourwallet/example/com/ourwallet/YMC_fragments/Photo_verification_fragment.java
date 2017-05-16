@@ -60,7 +60,6 @@ public class Photo_verification_fragment extends Fragment implements com.android
     private String profile_image;
     private View snack_view;
     private Bitmap bitmap,resize;
-
     private ProgressDialog mProgressDialog;
     private String expire_date,send_date;
     private ImageView upload_photo;
@@ -116,12 +115,8 @@ public class Photo_verification_fragment extends Fragment implements com.android
 
             date = new SimpleDateFormat("dd/MM/yyyy").format(dateObject);
              time = new SimpleDateFormat("h:mmaa").format(dateObject);
-            // Toast.makeText(MainActivity.this, Toast.LENGTH_SHORT).show();
-
             send_date=date+" "+time;
             send_date.replace("/","-");
-            Toast.makeText(getActivity(), send_date, Toast.LENGTH_SHORT).show();
-
         }
 
         catch (java.text.ParseException e)
@@ -198,15 +193,11 @@ public class Photo_verification_fragment extends Fragment implements com.android
                                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 102);
                             } else {
                                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-
-
                                 startActivityForResult(intent, 1);
                             }
                         }
                     }
                 }
-
                 if (options[item].equals("Choose from Gallery")) {
                     if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);

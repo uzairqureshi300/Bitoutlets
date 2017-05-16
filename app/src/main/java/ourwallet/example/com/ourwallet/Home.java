@@ -67,6 +67,21 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         Constants.image=details.getString("image","image");
         Constants.image =  Constants.image.replace("\\/\\/", "//");
         Constants.image =  Constants.image.replace("\\/", "//");
+        Constants.mobile_verified=details.getString("mobile_verified","no name");
+        Constants.email_verified=details.getString("email_verified","no name");
+        Constants.address_verified=details.getString("address_verified","no name");
+        Constants.status=details.getString("status","no name");
+        Constants.password=details.getString("password","no name");
+        Constants.full_name=details.getString("full_name","no name");
+        Constants.city=details.getString("city","no name");
+        Constants.country=details.getString("country","no");
+        Constants.username=details.getString("username","no name");
+        Constants.phone_number=details.getString("phone","no name");
+        Constants.address1=details.getString("address","no name");
+        Constants.address2=details.getString("address2","no name");
+
+
+
         details=getSharedPreferences("Login", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=details.edit();
         editor.putInt("value",1);
@@ -244,7 +259,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         if(id==R.id.nav_profile){
             i=new Intent(getApplicationContext(),Profile_Manage.class);
             startActivity(i);
-            finish();
+
 
         }
             return true;

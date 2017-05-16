@@ -19,9 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -39,7 +43,7 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
     private TabLayout tabLayout;
     private ViewPager viewPager;
     User_detailsfragment afterMarketFragment;
-
+    private ProgressDialog mProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +52,15 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
         tabLayout = (TabLayout) findViewById(R.id.tabs_parts_list);
         SetToolbar();
         afterMarketFragment = new User_detailsfragment();
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
 
+        verify_address();
     }
-
+    private void showProgressDialog() {
+        mProgressDialog = new ProgressDialog(Profile_Manage.this,R.style.AppCompatAlertDialogStyle);
+        mProgressDialog.setMessage("Please Wait..");
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new Contact_info(), "Contact Info");
@@ -107,13 +115,51 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
         finish();
     }
 
+    private void verify_address() {
+        showProgressDialog();
+        try {
+            JSONObject json = new JSONObject();
+            json.put("user_id", Constants.user_id);
+
+
+            JSONObject json2 = new JSONObject();
+            json2.put("to", "orupartners");
+            json2.put("methods", "get_verification_details");
+            json2.accumulate("complex", json);
+            String url = "http://orupartners.com/cp/redirect_to.php";
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
+
+            };
+            jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    5000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            MySingleton.getInstance(getApplication()).addToRequestQueue(jsObjRequest);
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     @Override
     public void onErrorResponse(VolleyError error) {
-
+        Log.e("erresponse", error.toString());
+        mProgressDialog.dismiss();
     }
 
     @Override
     public void onResponse(JSONObject response) {
+        Log.e("response", response.toString());
+        try {
+            Constants.varification_email = response.getString("varification_email");
+            Constants.verification_mobile = response.getString("verification_mobile");
+            Constants.verification_address = response.getString("verification_mobile");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        mProgressDialog.dismiss();
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 

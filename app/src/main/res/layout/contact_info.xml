@@ -4,6 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:background="@color/graycol"
    >
 
@@ -46,6 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:id="@+id/full_name"
+            android:textSize="13dp"
             android:padding="8dp"
             android:background="@drawable/edittext_background"
             android:textColor="@color/white"
@@ -71,10 +75,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:enabled="false"
+                android:textSize="13dp"
                 android:padding="8dp"
+                android:id="@+id/email"
                 android:background="@drawable/edittext_background"
                 android:textColor="@color/white"
-                android:text="name"/>
+                android:text="Email"/>
         </LinearLayout>
 
         <LinearLayout
@@ -98,9 +104,11 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:padding="8dp"
+                android:id="@+id/mobile"
+                android:textSize="13dp"
                 android:background="@drawable/edittext_background"
                 android:enabled="false"
-                android:text="Status"/>
+                android:text="Number"/>
 
         </LinearLayout>
         <LinearLayout
@@ -122,8 +130,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textSize="13dp"
                 android:textColor="@color/white"
                 android:padding="8dp"
+                android:id="@+id/country"
                 android:background="@drawable/edittext_background"
                 android:enabled="false"
                 android:text="Country"/>
@@ -148,8 +158,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textSize="13dp"
                 android:textColor="@color/white"
                 android:padding="8dp"
+                android:id="@+id/city"
                 android:background="@drawable/edittext_background"
                 android:enabled="false"
                 android:text="city"/>
@@ -170,12 +182,18 @@
 
                 android:gravity="center_vertical"
                 android:text="Address 1"/>
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:padding="8dp"
+                android:id="@+id/adress_one"
+                android:textSize="8dp"
+                android:maxLines = "123"
+
+                android:scrollbars="vertical"
                 android:background="@drawable/edittext_background"
                 android:enabled="false"
                 android:text="address 1"/>
@@ -202,6 +220,9 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:padding="8dp"
+                android:textSize="8dp"
+                android:singleLine="true"
+                android:id="@+id/adress_two"
                 android:background="@drawable/edittext_background"
                 android:enabled="false"
                 android:text="Address 2"/>
