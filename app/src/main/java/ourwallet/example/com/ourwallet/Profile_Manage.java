@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.android.volley.DefaultRetryPolicy;
@@ -42,6 +43,8 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
         com.android.volley.Response.ErrorListener,View.OnClickListener {
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private int validate=0;
+    private ImageView edit_image;
     User_detailsfragment afterMarketFragment;
     private ProgressDialog mProgressDialog;
     @Override
@@ -50,11 +53,21 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
         setContentView(R.layout.profile_manage);
         viewPager = (ViewPager) findViewById(R.id.viewpager_parts_list);
         tabLayout = (TabLayout) findViewById(R.id.tabs_parts_list);
+        edit_image=(ImageView)findViewById(R.id.add_contact);
+
         SetToolbar();
         afterMarketFragment = new User_detailsfragment();
 
+
         verify_address();
     }
+
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        Log.e("fragment value",String.valueOf(Constants.fragments_values));
+    }
+
     private void showProgressDialog() {
         mProgressDialog = new ProgressDialog(Profile_Manage.this,R.style.AppCompatAlertDialogStyle);
         mProgressDialog.setMessage("Please Wait..");
@@ -76,6 +89,7 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
 
             @Override
             public void onPageSelected(int position) {
+                validate = position;
             }
 
             @Override
@@ -88,7 +102,8 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
         Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
         TextView homeTitle = (TextView) findViewById(R.id.title_toolbar);
         homeTitle.setText("Profile");
-
+        edit_image.setVisibility(View.VISIBLE);
+        edit_image.setOnClickListener(this);
 
         setSupportActionBar(tb);
         final ActionBar ab = getSupportActionBar();
@@ -165,6 +180,36 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
 
     @Override
     public void onClick(View view) {
+    switch (view.getId()){
+        case R.id.add_contact:
+            Constants.fragments_values=validate;
+            if(Constants.fragments_values==0){
+               Contact_info fragment = new  Contact_info();
+                (( Contact_info)fragment).full_name.setEnabled(true);
+                (( Contact_info)fragment).email.setEnabled(true);
+                (( Contact_info)fragment).number.setEnabled(true);
+                (( Contact_info)fragment).country.setEnabled(true);
+                (( Contact_info)fragment).city.setEnabled(true);
+                (( Contact_info)fragment).address1.setEnabled(true);
+                (( Contact_info)fragment).address2.setEnabled(true);
+                (( Contact_info)fragment).change.setVisibility(View.VISIBLE);
 
+
+            }
+            if(Constants.fragments_values==1){
+                Kyc_info fragment = new Kyc_info();
+                ((Kyc_info)fragment).mobile_verify.setEnabled(true);
+                ((Kyc_info)fragment).email_verify.setEnabled(true);
+                ((Kyc_info)fragment).email_verify.setEnabled(true);
+            }
+            if(Constants.fragments_values==2){
+                Login_info fragment = new Login_info();
+                ((Login_info)fragment).name.setEnabled(true);
+                ((Login_info)fragment).password.setEnabled(true);
+                ((Login_info)fragment).status.setEnabled(true);
+            }
+            Toast.makeText(this, "click"+Constants.fragments_values, Toast.LENGTH_SHORT).show();
+
+    }
     }
 }

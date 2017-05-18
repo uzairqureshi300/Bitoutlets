@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import ourwallet.example.com.ourwallet.Constants;
 import ourwallet.example.com.ourwallet.R;
 
 public class Login_info extends Fragment {
-    private EditText name, password, status;
+  public static EditText name, password, status;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,18 +37,13 @@ public class Login_info extends Fragment {
     private void setData() {
         name.setText(Constants.username);
         password.setText(Constants.password);
-        if(Constants.status.equals("1")) {
+        if (Constants.status.equals("1")) {
             status.setText("Active");
-        }
-        else{
+        } else {
             status.setText("Not Active");
 
         }
-        }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
     }
+
+
 }

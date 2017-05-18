@@ -34,6 +34,7 @@ public class Constants {
     public  static String varification_email="";
     public  static String verification_mobile="";
     public  static String verification_address="";
+    public  static int fragments_values=0;
 
 
 

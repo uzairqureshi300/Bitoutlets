@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import ourwallet.example.com.ourwallet.R;
 
 
 public class Kyc_info extends Fragment {
-    private TextView mobile_verify, email_verify, photo_verify, address_verify;
+    public static TextView mobile_verify, email_verify, photo_verify, address_verify;
 
     @Nullable
     @Override
@@ -28,10 +29,10 @@ public class Kyc_info extends Fragment {
         setData();
         return v;
     }
-
     private void setData() {
         mobile_verify.setText(Constants.verification_mobile);
         email_verify.setText(Constants.varification_email);
         address_verify.setText(Constants.verification_address);
     }
+
 }
