@@ -166,6 +166,7 @@ public class Address_verification_fragment extends Fragment implements com.andro
             json.put("city", city.getText().toString());
             json.put("issuance", send_date);
             json.put("user_id", Constants.user_id);
+            json.put("token", Constants.token);
 
 
             JSONObject json2 = new JSONObject();

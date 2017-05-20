@@ -77,6 +77,7 @@ public class Email_verification_fragment extends Fragment implements com.android
         Log.e("code", code);
         JSONObject json = new JSONObject();
         json.put("user_id", Constants.user_id);
+        json.put("token", Constants.token);
         json.put("code", code);
 
 

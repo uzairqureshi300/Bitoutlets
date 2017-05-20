@@ -108,7 +108,8 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
         json.put("email", Email.getText().toString());
         json.put("fax", Fax.getText().toString());
         json.put("address", Address.getText().toString());
-        json.put("user_id",Constants.user_id);
+        json.put("user_id", Constants.user_id);
+        json.put("token", Constants.token);
         json.put("created_by",Constants.name);
         json.put("wallet_address",Wallet_Address.getText().toString());
         json.put("grade",Constants.name);

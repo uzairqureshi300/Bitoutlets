@@ -125,6 +125,7 @@ private void Validation(){
 
             String error = response.getString("error");
             if(error.equals("0")){
+                String token=response.getString("token");
                 JSONObject getdetails=response.getJSONObject("user_details");
                 Log.e("data",getdetails.toString());
                 details=getSharedPreferences("User_details", Context.MODE_PRIVATE);
@@ -133,6 +134,7 @@ private void Validation(){
                 edit.putString("email",getdetails.getString("email"));
                 edit.putString("balance",getdetails.getString("balance"));
                 edit.putString("image",getdetails.getString("image"));
+                edit.putString("token",token);
                 edit.putString("wallet_address",getdetails.getString("wallet_address"));
                 edit.putString("user_id",getdetails.getString("user_id"));
                 edit.putString("mobile_verified",getdetails.getString("mobile_verified"));

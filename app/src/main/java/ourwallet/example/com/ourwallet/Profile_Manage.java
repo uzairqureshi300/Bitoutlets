@@ -58,14 +58,13 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
         SetToolbar();
         afterMarketFragment = new User_detailsfragment();
 
-
+       // verify_pin();
         verify_address();
     }
 
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-        Log.e("fragment value",String.valueOf(Constants.fragments_values));
     }
 
     private void showProgressDialog() {
@@ -129,14 +128,38 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
         super.onBackPressed();
         finish();
     }
+    private void verify_pin() {
+        showProgressDialog();
+        try {
+            JSONObject json = new JSONObject();
+            json.put("user_id", Constants.user_id);
+            json.put("token", Constants.token);
+            json.put("number", "2");
 
+
+            JSONObject json2 = new JSONObject();
+            json2.put("to", "orupartners");
+            json2.put("methods", "generate_epins");
+            json2.accumulate("complex", json);
+            String url = "http://orupartners.com/cp/redirect_to.php";
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
+
+            };
+            jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    5000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            MySingleton.getInstance(getApplication()).addToRequestQueue(jsObjRequest);
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+    }
     private void verify_address() {
         showProgressDialog();
         try {
             JSONObject json = new JSONObject();
             json.put("user_id", Constants.user_id);
-
-
+            json.put("token", Constants.token);
             JSONObject json2 = new JSONObject();
             json2.put("to", "orupartners");
             json2.put("methods", "get_verification_details");
@@ -204,9 +227,10 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
             }
             if(Constants.fragments_values==2){
                 Login_info fragment = new Login_info();
-                ((Login_info)fragment).name.setEnabled(true);
-                ((Login_info)fragment).password.setEnabled(true);
-                ((Login_info)fragment).status.setEnabled(true);
+                ((Login_info)fragment).new_layout.setVisibility(View.VISIBLE);
+                ((Login_info)fragment).c_layout.setVisibility(View.VISIBLE);
+                ((Login_info)fragment).change.setVisibility(View.VISIBLE);
+
             }
             Toast.makeText(this, "click"+Constants.fragments_values, Toast.LENGTH_SHORT).show();
 

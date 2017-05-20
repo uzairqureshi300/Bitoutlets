@@ -5,17 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
+    android:id="@+id/snack_login_info"
     android:focusableInTouchMode="true"
-    android:background="@color/graycol"
-    >
-
-    <LinearLayout
+    android:background="@color/graycol">
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.3"
+        android:layout_weight="1">
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
 
-        >
-        <TextView
+       <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -23,11 +25,10 @@
             android:textSize="25dp"
             android:textStyle="bold"
             android:text="Login Info"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1.4"></LinearLayout>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="70dp"
+          android:background="@color/colorPrimary"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,6 +69,10 @@
         </LinearLayout>
 
     </LinearLayout>
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="110dp"
+           android:background="@color/colorPrimary"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -106,6 +111,10 @@
                 android:enabled="false"
                 android:text="name"/>
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/colorPrimary"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -131,7 +140,70 @@
                 android:textColor="@color/white"
                 />
         </LinearLayout>
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/colorPrimary"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:visibility="gone"
+            android:id="@+id/new_pass_layout"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.6"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"
+                android:text="New Password"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:hint="New Password"
+                android:id="@+id/new_password"
+                android:background="@drawable/edittext_background"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/colorPrimary"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:visibility="gone"
+            android:id="@+id/c_pass_layout"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.6"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"
+                android:text="Confirm Password"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:hint="Confirm Password"
+                android:id="@+id/c_password"
+                android:background="@drawable/edittext_background"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/colorPrimary"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -157,14 +229,46 @@
                 android:background="@drawable/edittext_background"
                 android:enabled="false"
                 android:text="Status"/>
+
         </LinearLayout>
-
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/colorPrimary"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1.3"></LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:gravity="center_horizontal"
+           android:layout_weight="1.8">
+
+           <ImageView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:layout_weight="1"/>
+           <Button
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:text="Change"
+               android:id="@+id/change_password"
+               android:textSize="20dp"
+               android:layout_weight="1"
+               android:visibility="gone"
+               android:textColor="@color/white"
+               android:background="@drawable/button_background"
+               android:gravity="center"/>
+           <ImageView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:layout_weight="1"/>
+       </LinearLayout>
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="120dp" />
+   </LinearLayout>
+    </ScrollView>
+
+
 </LinearLayout>
 
 

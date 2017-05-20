@@ -135,6 +135,7 @@ public class Photo_verification_fragment extends Fragment implements com.android
             json.put("photo_type", photo_id_type.getText().toString());
             json.put("photo_id", photo_id_number.getText().toString());
             json.put("user_id", Constants.user_id);
+            json.put("token", Constants.token);
             json.put("photo_expiration", send_date);
 
             JSONObject json2 = new JSONObject();

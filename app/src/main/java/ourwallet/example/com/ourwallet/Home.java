@@ -43,13 +43,14 @@ import java.util.ArrayList;
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
     private Button lock;
     private ImageView profile_image;
-    private TextView name,email;
+    private TextView name, email;
     Fragment fragment = null;
-    private Cursor cursor ;
-    private SharedPreferences   details;
-    ArrayList<String> StoreContacts ;
-    private String phonenumber,names;
-    public  static final int RequestPermissionCode  = 1 ;
+    private Cursor cursor;
+    private SharedPreferences details;
+    ArrayList<String> StoreContacts;
+    private String phonenumber, names;
+    public static final int RequestPermissionCode = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,92 +60,87 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         String[] parts = string.split(",");
         StoreContacts = new ArrayList<String>();
         details = getSharedPreferences("User_details", Context.MODE_PRIVATE);
-        Constants.name=details.getString("name","no name");
-        Constants.email=details.getString("email","email");
-        Constants.adress=details.getString("wallet_address","0");
-        Constants.balance=details.getString("balance","balance");
-        Constants.user_id=details.getString("user_id","no_id");
-        Constants.image=details.getString("image","image");
-        Constants.image =  Constants.image.replace("\\/\\/", "//");
-        Constants.image =  Constants.image.replace("\\/", "//");
-        Constants.mobile_verified=details.getString("mobile_verified","no name");
-        Constants.email_verified=details.getString("email_verified","no name");
-        Constants.address_verified=details.getString("address_verified","no name");
-        Constants.status=details.getString("status","no name");
-        Constants.password=details.getString("password","no name");
-        Constants.full_name=details.getString("full_name","no name");
-        Constants.city=details.getString("city","no name");
-        Constants.country=details.getString("country","no");
-        Constants.username=details.getString("username","no name");
-        Constants.phone_number=details.getString("phone","no name");
-        Constants.address1=details.getString("address","no name");
-        Constants.address2=details.getString("address2","no name");
+        Constants.name = details.getString("name", "no name");
+        Constants.email = details.getString("email", "email");
+        Constants.adress = details.getString("wallet_address", "0");
+        Constants.balance = details.getString("balance", "balance");
+        Constants.user_id = details.getString("user_id", "no_id");
+        Constants.image = details.getString("image", "image");
+        Constants.image = Constants.image.replace("\\/\\/", "//");
+        Constants.image = Constants.image.replace("\\/", "//");
+        Constants.mobile_verified = details.getString("mobile_verified", "no name");
+        Constants.email_verified = details.getString("email_verified", "no name");
+        Constants.address_verified = details.getString("address_verified", "no name");
+        Constants.status = details.getString("status", "no name");
+        Constants.password = details.getString("password", "no name");
+        Constants.full_name = details.getString("full_name", "no name");
+        Constants.city = details.getString("city", "no name");
+        Constants.country = details.getString("country", "no");
+        Constants.username = details.getString("username", "no name");
+        Constants.phone_number = details.getString("phone", "no name");
+        Constants.address1 = details.getString("address", "no name");
+        Constants.address2 = details.getString("address2", "no name");
+        Constants.token = details.getString("token", "no token");
 
 
-
-        details=getSharedPreferences("Login", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=details.edit();
-        editor.putInt("value",1);
+        details = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = details.edit();
+        editor.putInt("value", 1);
         editor.commit();
-        Log.e("Image",Constants.image);
-        Toolbar toolbar =  (Toolbar) findViewById(R.id.toolbar);
+        Log.e("Image", Constants.image);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        lock=(Button)findViewById(R.id.lock);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View hView =  navigationView.inflateHeaderView(R.layout.nav_header_main);
-        profile_image=(ImageView)hView.findViewById(R.id.imageView);
-        name=(TextView)hView.findViewById(R.id.name);
-        email=(TextView)hView.findViewById(R.id.email);
+        View hView = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        profile_image = (ImageView) hView.findViewById(R.id.imageView);
+        name = (TextView) hView.findViewById(R.id.name);
+        email = (TextView) hView.findViewById(R.id.email);
         name.setText(Constants.name);
         email.setText(Constants.email);
         Picasso.with(getApplicationContext()).
-                load(Constants.image).resize(80,80).
+                load(Constants.image).resize(80, 80).
                 placeholder(R.drawable.default_avatar).into(profile_image);
-        lock.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Toast.makeText(Home.this, "lock" , Toast.LENGTH_SHORT).show();
-        }
-    });
+
         fragment = new User_detailsfragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
-        SharedPreferences contacts=getSharedPreferences("get_contacts",Context.MODE_PRIVATE);
-        int a=contacts.getInt("one_time_contacts",0);
-        if(a==0) {
+        SharedPreferences contacts = getSharedPreferences("get_contacts", Context.MODE_PRIVATE);
+        int a = contacts.getInt("one_time_contacts", 0);
+        if (a == 0) {
 
             try {
                 GetContactsIntoArrayList();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
-        else{
+        } else {
 
         }
     }
-    public void EnableRuntimePermission_Camera(){
+
+    public void EnableRuntimePermission_Camera() {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(
-              Home.this,
-                Manifest.permission.CAMERA))
-        {
-            Toast.makeText(Home.this,"Camera", Toast.LENGTH_LONG).show();
+                Home.this,
+                Manifest.permission.CAMERA)) {
+            Toast.makeText(Home.this, "Camera", Toast.LENGTH_LONG).show();
         } else {
 
-            ActivityCompat.requestPermissions(Home.this,new String[]{
+            ActivityCompat.requestPermissions(Home.this, new String[]{
                     Manifest.permission.CAMERA}, 1);
 
         }
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -156,24 +152,25 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     public void GetContactsIntoArrayList() throws JSONException {
-        SharedPreferences contacts=getSharedPreferences("get_contacts",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=contacts.edit();
-        editor.putInt("one_time_contacts",1);
+        SharedPreferences contacts = getSharedPreferences("get_contacts", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = contacts.edit();
+        editor.putInt("one_time_contacts", 1);
         editor.commit();
 
-        cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null, null, null);
-      //  name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+        cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
+        //  name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
         while (cursor.moveToNext()) {
             names = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             phonenumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-        //    Log.e("NAmes",phonenumber);
-            StoreContacts.add(names + " "  + ":" + " " + phonenumber);
+            //    Log.e("NAmes",phonenumber);
+            StoreContacts.add(names + " " + ":" + " " + phonenumber);
         }
 
         cursor.close();
         Login();
 
     }
+
     private void Login() throws JSONException {
 
 
@@ -188,14 +185,14 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             }
 
         }
-        String[] contact=new String[StoreContacts.size()];
-        contact=StoreContacts.toArray(contact);
+        String[] contact = new String[StoreContacts.size()];
+        contact = StoreContacts.toArray(contact);
         JSONObject json2 = new JSONObject();
-        json2.put("to","orupartners");
-        json2.put("methods","save_contact");
-        json2.accumulate("complex",json);
+        json2.put("to", "orupartners");
+        json2.put("methods", "save_contact");
+        json2.accumulate("complex", json);
         String url = "http://orupartners.com/cp/redirect_to.php";
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url,json2, this ,this){
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
 
         };
         jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
@@ -206,12 +203,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-         if (id == R.id.action_settings) {
+        if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -236,33 +231,33 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             }
         }
         if (id == R.id.nav_contacts) {
-            i=new Intent(getApplicationContext(),Contacts.class);
+            i = new Intent(getApplicationContext(), Contacts.class);
             startActivity(i);
-         }
+        }
         if (id == R.id.nav_feedback) {
 
         }
         if (id == R.id.nav_ync) {
-            i=new Intent(getApplicationContext(),YMC.class);
+            i = new Intent(getApplicationContext(), YMC.class);
             startActivity(i);
         }
         if (id == R.id.nav_logout) {
-            details=getSharedPreferences("Login", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor=details.edit();
+            details = getSharedPreferences("Login", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = details.edit();
             editor.clear();
             editor.commit();
-            i=new Intent(getApplicationContext(),MainActivity.class);
+            i = new Intent(getApplicationContext(), MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
 
         }
-        if(id==R.id.nav_profile){
-            i=new Intent(getApplicationContext(),Profile_Manage.class);
+        if (id == R.id.nav_profile) {
+            i = new Intent(getApplicationContext(), Profile_Manage.class);
             startActivity(i);
 
 
         }
-            return true;
+        return true;
 
     }
 
@@ -273,7 +268,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     @Override
     public void onResponse(JSONObject response) {
-        Log.e("response",response.toString());
+        Log.e("response", response.toString());
         Toast.makeText(Home.this, "Contacts Added", Toast.LENGTH_SHORT).show();
     }
 
@@ -285,7 +280,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             case RequestPermissionCode:
                 if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
                 } else {
-                    ActivityCompat.requestPermissions(Home.this,new String[]{
+                    ActivityCompat.requestPermissions(Home.this, new String[]{
                             Manifest.permission.CAMERA}, RequestPermissionCode);
                 }
                 break;

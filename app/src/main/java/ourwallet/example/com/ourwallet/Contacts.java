@@ -131,7 +131,8 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 	private void List() throws JSONException {
 		showProgressDialog();
 		JSONObject json = new JSONObject();
-		json.put("user_id",Constants.user_id);
+		json.put("user_id", Constants.user_id);
+		json.put("token", Constants.token);
 		JSONObject json2 = new JSONObject();
 		json2.put("to","orupartners");
 		json2.put("methods","fetch_contacts");
