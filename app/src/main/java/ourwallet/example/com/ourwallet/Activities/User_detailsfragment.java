@@ -1,8 +1,6 @@
-package ourwallet.example.com.ourwallet;
+package ourwallet.example.com.ourwallet.Activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,7 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import ourwallet.example.com.ourwallet.Constants;
+import ourwallet.example.com.ourwallet.R;
 
 /**
  * Created by hassan on 11/15/16.

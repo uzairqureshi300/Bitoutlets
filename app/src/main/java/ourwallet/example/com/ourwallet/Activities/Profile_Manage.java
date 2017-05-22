@@ -1,12 +1,7 @@
-package ourwallet.example.com.ourwallet;
+package ourwallet.example.com.ourwallet.Activities;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -19,24 +14,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import ourwallet.example.com.ourwallet.Constants;
 import ourwallet.example.com.ourwallet.Profile_fragments.Contact_info;
 import ourwallet.example.com.ourwallet.Profile_fragments.Kyc_info;
 import ourwallet.example.com.ourwallet.Profile_fragments.Login_info;
+import ourwallet.example.com.ourwallet.R;
 import ourwallet.example.com.ourwallet.ViewPager.ViewPagerAdapter;
 
 public class Profile_Manage extends AppCompatActivity implements com.android.volley.Response.Listener<JSONObject>,
@@ -232,7 +222,7 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
                 ((Login_info)fragment).change.setVisibility(View.VISIBLE);
 
             }
-            Toast.makeText(this, "click"+Constants.fragments_values, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "click"+ Constants.fragments_values, Toast.LENGTH_SHORT).show();
 
     }
     }

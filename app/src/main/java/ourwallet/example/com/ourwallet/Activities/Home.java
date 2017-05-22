@@ -1,4 +1,4 @@
-package ourwallet.example.com.ourwallet;
+package ourwallet.example.com.ourwallet.Activities;
 
 import android.Manifest;
 import android.content.Context;
@@ -22,7 +22,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +29,6 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -39,6 +36,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import ourwallet.example.com.ourwallet.Constants;
+import ourwallet.example.com.ourwallet.R;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
     private Button lock;
@@ -254,8 +254,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         if (id == R.id.nav_profile) {
             i = new Intent(getApplicationContext(), Profile_Manage.class);
             startActivity(i);
-
-
+        }
+        if (id == R.id.nav_epin) {
+            i = new Intent(getApplicationContext(), Epins.class);
+            startActivity(i);
         }
         return true;
 

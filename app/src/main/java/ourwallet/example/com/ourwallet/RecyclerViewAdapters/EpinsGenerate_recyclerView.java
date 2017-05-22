@@ -10,18 +10,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ourwallet.example.com.ourwallet.Constants;
 import ourwallet.example.com.ourwallet.Models.Contacts_Model;
+import ourwallet.example.com.ourwallet.Models.Epins_Model;
 import ourwallet.example.com.ourwallet.R;
 
 /**
  * Created by uzair on 09/05/2017.
  */
 
-public class Contacts_recyclerView extends RecyclerView.Adapter<Contacts_recyclerView.MyViewHolder> implements View.OnClickListener {
+public class EpinsGenerate_recyclerView extends RecyclerView.Adapter<EpinsGenerate_recyclerView.MyViewHolder> implements View.OnClickListener {
 
-    private List<Contacts_Model> horizontalList=new ArrayList<Contacts_Model>();
+    private List<String> horizontalList=new ArrayList<String>();
     private Context context;
-
+    private  List<Epins_Model> epinslist=new ArrayList<Epins_Model>();
     @Override
     public void onClick(View view) {
 
@@ -29,17 +31,20 @@ public class Contacts_recyclerView extends RecyclerView.Adapter<Contacts_recycle
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView txtView;
-        public TextView phone;
+
 
         public MyViewHolder(View view) {
             super(view);
-            txtView = (TextView) view.findViewById(R.id.txtView);
-            phone = (TextView)view.findViewById(R.id.phone);
+            txtView = (TextView) view.findViewById(R.id.epins_text);
         }
     }
 
+    public EpinsGenerate_recyclerView( List<Epins_Model> horizontalList) {
 
-    public Contacts_recyclerView(Context context,List<Contacts_Model> horizontalList) {
+        this.epinslist = horizontalList;
+    }
+
+    public EpinsGenerate_recyclerView(Context context, List<String> horizontalList) {
         this.context=context;
         this.horizontalList = horizontalList;
     }
@@ -47,7 +52,7 @@ public class Contacts_recyclerView extends RecyclerView.Adapter<Contacts_recycle
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.contacts_view_items, parent, false);
+                .inflate(R.layout.epins_view_items, parent, false);
         MyViewHolder holder = new MyViewHolder(itemView);
 
         return holder;
@@ -55,18 +60,21 @@ public class Contacts_recyclerView extends RecyclerView.Adapter<Contacts_recycle
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.txtView.setText(horizontalList.get(position).getFirst_name());
-        holder.phone.setText(horizontalList.get(position).getPhone());
-        holder.txtView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // Toast.makeText(context,holder.txtView.getText().toString(),Toast.LENGTH_SHORT).show();
-            }
-        });
+        if(Constants.constrtuctor_value==1){
+            holder.txtView.setText(horizontalList.get(position));
+
+        }
+       else if(Constants.constrtuctor_value==2) {
+            holder.txtView.setText(epinslist.get(position).getPins());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return horizontalList.size();
-    }
+        if(Constants.constrtuctor_value==1){
+        return horizontalList.size();}
+        else {
+            return epinslist.size();
+        }
+}
 }

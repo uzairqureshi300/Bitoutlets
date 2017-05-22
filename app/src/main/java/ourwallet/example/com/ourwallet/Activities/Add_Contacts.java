@@ -1,4 +1,4 @@
-package ourwallet.example.com.ourwallet;
+package ourwallet.example.com.ourwallet.Activities;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -28,8 +28,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ourwallet.example.com.ourwallet.Constants;
 import ourwallet.example.com.ourwallet.Database.AndroidOpenDbHelper;
 import ourwallet.example.com.ourwallet.Models.Contacts_Model;
+import ourwallet.example.com.ourwallet.R;
 
 public class Add_Contacts extends AppCompatActivity implements View.OnClickListener ,com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
     private EditText F_name, L_name, Phone, Email, Fax, Address, Portal, Wallet_Address, Created_by,Grade;
@@ -110,10 +112,10 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
         json.put("address", Address.getText().toString());
         json.put("user_id", Constants.user_id);
         json.put("token", Constants.token);
-        json.put("created_by",Constants.name);
+        json.put("created_by", Constants.name);
         json.put("wallet_address",Wallet_Address.getText().toString());
-        json.put("grade",Constants.name);
-        Log.e("USER",Constants.user_id);
+        json.put("grade", Constants.name);
+        Log.e("USER", Constants.user_id);
         JSONObject json2 = new JSONObject();
         json2.put("to","orupartners");
         json2.put("methods","add_contact");

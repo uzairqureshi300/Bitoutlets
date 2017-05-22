@@ -1,4 +1,4 @@
-package ourwallet.example.com.ourwallet;
+package ourwallet.example.com.ourwallet.Activities;
 
 import android.content.Context;
 import android.graphics.Bitmap;

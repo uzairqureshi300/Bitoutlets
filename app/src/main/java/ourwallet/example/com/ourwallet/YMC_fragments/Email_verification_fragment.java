@@ -21,8 +21,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ourwallet.example.com.ourwallet.Activities.MySingleton;
 import ourwallet.example.com.ourwallet.Constants;
-import ourwallet.example.com.ourwallet.MySingleton;
 import ourwallet.example.com.ourwallet.R;
 
 public class Email_verification_fragment extends Fragment implements com.android.volley.Response.Listener<JSONObject>,

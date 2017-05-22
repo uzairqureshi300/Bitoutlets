@@ -1,4 +1,4 @@
-package ourwallet.example.com.ourwallet;
+package ourwallet.example.com.ourwallet.Activities;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -17,9 +17,7 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
-import ourwallet.example.com.ourwallet.Profile_fragments.Contact_info;
-import ourwallet.example.com.ourwallet.Profile_fragments.Kyc_info;
-import ourwallet.example.com.ourwallet.Profile_fragments.Login_info;
+import ourwallet.example.com.ourwallet.R;
 import ourwallet.example.com.ourwallet.ViewPager.ViewPagerAdapter;
 import ourwallet.example.com.ourwallet.YMC_fragments.Address_verification_fragment;
 import ourwallet.example.com.ourwallet.YMC_fragments.Email_verification_fragment;

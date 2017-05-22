@@ -25,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -40,8 +39,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ourwallet.example.com.ourwallet.Activities.MySingleton;
 import ourwallet.example.com.ourwallet.Constants;
-import ourwallet.example.com.ourwallet.MySingleton;
 import ourwallet.example.com.ourwallet.R;
 
 import static android.app.Activity.RESULT_OK;

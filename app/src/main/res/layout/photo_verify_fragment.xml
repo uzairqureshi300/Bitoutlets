@@ -79,7 +79,6 @@
                 android:textColor="@color/white"
                 android:drawablePadding="10dp"
                 android:inputType="date"
-                android:text="02/09/2018"
                 android:textColorHint="@color/white"
                 android:hint="Expiration Date"/>
 

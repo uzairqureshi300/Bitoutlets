@@ -1,4 +1,4 @@
-package ourwallet.example.com.ourwallet;
+package ourwallet.example.com.ourwallet.Activities;
 
 import android.app.ProgressDialog;
 import android.content.ContentValues;
@@ -35,8 +35,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ourwallet.example.com.ourwallet.Constants;
 import ourwallet.example.com.ourwallet.Database.AndroidOpenDbHelper;
 import ourwallet.example.com.ourwallet.Models.Contacts_Model;
+import ourwallet.example.com.ourwallet.R;
 import ourwallet.example.com.ourwallet.RecyclerViewAdapters.Contacts_recyclerView;
 import ourwallet.example.com.ourwallet.RecyclerViewAdapters.RecyclerItemClickListener;
 import ourwallet.example.com.ourwallet.RecyclerViewAdapters.SimpleDividerItemDecoration;
@@ -188,6 +190,7 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 						@Override
 						public void onItemClick(View view, int i) {
 							Intent intent=new Intent(getApplicationContext(),Contacts_detail.class);
+							intent.putExtra("value",2);
 							intent.putExtra("f_name",populateList().get(i).getFirst_name());
 							intent.putExtra("l_name",populateList().get(i).getLast_name());
 							intent.putExtra("number",populateList().get(i).getPhone());
@@ -243,7 +246,9 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 					new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
 						@Override
 						public void onItemClick(View view, int i) {
+
 							Intent intent=new Intent(getApplicationContext(),Contacts_detail.class);
+							intent.putExtra("value",2);
 							intent.putExtra("f_name",populateList().get(i).getFirst_name());
 							intent.putExtra("l_name",populateList().get(i).getLast_name());
 							intent.putExtra("number",populateList().get(i).getPhone());

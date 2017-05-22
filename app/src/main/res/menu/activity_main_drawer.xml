@@ -19,6 +19,10 @@
             android:icon="@drawable/feedback_icon"
             android:title="YNC" />
         <item
+            android:id="@+id/nav_epin"
+            android:icon="@drawable/setting_icon"
+            android:title="Epins" />
+        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/setting_icon"
             android:title="Settings" />

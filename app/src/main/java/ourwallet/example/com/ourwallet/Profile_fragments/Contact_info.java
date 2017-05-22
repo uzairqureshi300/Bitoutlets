@@ -1,7 +1,6 @@
 package ourwallet.example.com.ourwallet.Profile_fragments;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -22,9 +20,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ourwallet.example.com.ourwallet.Activities.MySingleton;
 import ourwallet.example.com.ourwallet.Constants;
-import ourwallet.example.com.ourwallet.MySingleton;
-import ourwallet.example.com.ourwallet.Profile_Manage;
 import ourwallet.example.com.ourwallet.R;
 
 public class Contact_info extends Fragment implements com.android.volley.Response.Listener<JSONObject>,
