@@ -34,6 +34,10 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/balance_icon"
             android:title="Profile" />
+        <item
+            android:id="@+id/nav_transaction_password"
+            android:icon="@drawable/help_icon"
+            android:title="Transaction Password" />
 
         <item
             android:id="@+id/nav_help"

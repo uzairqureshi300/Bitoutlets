@@ -19,7 +19,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:id="@+id/splash"
-    android:layout_weight="0.6"
+    android:layout_weight="0.2"
     android:src="@drawable/logo"
     />
     <ImageView
@@ -38,7 +38,8 @@
             android:text="Welcome To Oruwallet"
             android:gravity="center"
             android:textSize="25dp"
-            android:textColor="@color/white"/>
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"/>
 
 
 

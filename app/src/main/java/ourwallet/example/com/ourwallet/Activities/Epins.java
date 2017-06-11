@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -81,7 +82,7 @@ public class Epins extends AppCompatActivity implements com.android.volley.Respo
             json2.put("to", "orupartners");
             json2.put("methods", "get_pins");
             json2.accumulate("complex", json);
-            String url = "http://orupartners.com/cp/redirect_to.php";
+            String url = "http://propiran.com/cp/redirect_to.php";
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
 
             };
@@ -117,6 +118,17 @@ public class Epins extends AppCompatActivity implements com.android.volley.Respo
     @Override
     public void onErrorResponse(VolleyError error) {
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

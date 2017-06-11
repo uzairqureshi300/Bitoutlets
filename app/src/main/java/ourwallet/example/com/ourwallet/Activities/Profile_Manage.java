@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ourwallet.example.com.ourwallet.Constants;
+import ourwallet.example.com.ourwallet.Home_Fragments.User_detailsfragment;
 import ourwallet.example.com.ourwallet.Profile_fragments.Contact_info;
 import ourwallet.example.com.ourwallet.Profile_fragments.Kyc_info;
 import ourwallet.example.com.ourwallet.Profile_fragments.Login_info;
@@ -118,32 +119,7 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
         super.onBackPressed();
         finish();
     }
-    private void verify_pin() {
-        showProgressDialog();
-        try {
-            JSONObject json = new JSONObject();
-            json.put("user_id", Constants.user_id);
-            json.put("token", Constants.token);
-            json.put("number", "2");
 
-
-            JSONObject json2 = new JSONObject();
-            json2.put("to", "orupartners");
-            json2.put("methods", "generate_epins");
-            json2.accumulate("complex", json);
-            String url = "http://orupartners.com/cp/redirect_to.php";
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
-
-            };
-            jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    5000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            MySingleton.getInstance(getApplication()).addToRequestQueue(jsObjRequest);
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-    }
     private void verify_address() {
         showProgressDialog();
         try {
@@ -154,7 +130,7 @@ public class Profile_Manage extends AppCompatActivity implements com.android.vol
             json2.put("to", "orupartners");
             json2.put("methods", "get_verification_details");
             json2.accumulate("complex", json);
-            String url = "http://orupartners.com/cp/redirect_to.php";
+            String url = "http://propiran.com/cp/redirect_to.php";
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
 
             };

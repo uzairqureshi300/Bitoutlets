@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.NavigationView;
@@ -38,6 +40,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import ourwallet.example.com.ourwallet.Constants;
+import ourwallet.example.com.ourwallet.Database.AndroidOpenDbHelper;
+import ourwallet.example.com.ourwallet.Home_Fragments.Transaction_fragment;
+import ourwallet.example.com.ourwallet.Home_Fragments.User_detailsfragment;
 import ourwallet.example.com.ourwallet.R;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
@@ -191,7 +196,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         json2.put("to", "orupartners");
         json2.put("methods", "save_contact");
         json2.accumulate("complex", json);
-        String url = "http://orupartners.com/cp/redirect_to.php";
+        String url = "http://propiran.com/cp/redirect_to.php";
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
 
         };
@@ -218,7 +223,17 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         // Handle navigation view item clicks here.
         Intent i;
         int id = item.getItemId();
+        if (id == R.id.nav_transaction_password) {
 
+
+            fragment = new Transaction_fragment();
+            if (fragment != null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame, fragment);
+                ft.commit();
+                // Handle the camera action
+            }
+        }
         if (id == R.id.nav_home) {
 
 
@@ -246,9 +261,11 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             SharedPreferences.Editor editor = details.edit();
             editor.clear();
             editor.commit();
+            validate_contacts();
             i = new Intent(getApplicationContext(), MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
+            finish();
 
         }
         if (id == R.id.nav_profile) {
@@ -268,6 +285,25 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
+    private void validate_contacts(){
+        SharedPreferences firsttime_get=getSharedPreferences("1st_time",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=firsttime_get.edit();
+        editor.clear();
+        editor.commit();
+        dropTable();
+
+    }
+    public  void dropTable() {
+        AndroidOpenDbHelper androidOpenDbHelperObj = new AndroidOpenDbHelper(this);
+        SQLiteDatabase db = androidOpenDbHelperObj.getWritableDatabase();
+
+        try {
+            db.execSQL("delete from "+ AndroidOpenDbHelper.TABLE_NAME_GPA);
+            Log.e("eee","fff");
+        } catch (SQLException e) {
+
+        }
+    }
     @Override
     public void onResponse(JSONObject response) {
         Log.e("response", response.toString());

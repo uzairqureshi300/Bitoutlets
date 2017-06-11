@@ -1,4 +1,4 @@
-package ourwallet.example.com.ourwallet.Activities;
+package ourwallet.example.com.ourwallet.Home_Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;

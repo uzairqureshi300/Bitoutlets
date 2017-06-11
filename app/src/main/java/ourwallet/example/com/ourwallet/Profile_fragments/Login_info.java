@@ -80,7 +80,7 @@ public class Login_info extends Fragment implements com.android.volley.Response.
             json2.put("to", "orupartners");
             json2.put("methods", "update_password");
             json2.accumulate("complex", json);
-            String url = "http://orupartners.com/cp/redirect_to.php";
+            String url = "http://propiran.com/cp/redirect_to.php";
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
 
             };

@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -90,6 +91,14 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
             ||Grade.getText().toString().equals("")){
         Snackbar.make(snackbar,"Fill empty Field",Snackbar.LENGTH_SHORT).show();
     }
+    else if(!Grade.getText().toString().equals("A")&&!Grade.getText().toString().equals("B")
+            &&   !Grade.getText().toString().equals("C")&&!Grade.getText().toString().equals("D")){
+        Snackbar.make(snackbar,"Choose grades from A to D",Snackbar.LENGTH_SHORT).show();
+
+    }
+    else if(!isValidEmail(Email.getText().toString())){
+        Snackbar.make(snackbar,"invalid email format",Snackbar.LENGTH_SHORT).show();
+    }
 
         else{
         try {
@@ -100,7 +109,9 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
     }
 
     }
-
+    private static boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
     private void Add_Contact() throws JSONException {
         showProgressDialog();
         JSONObject json = new JSONObject();
@@ -120,7 +131,7 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
         json2.put("to","orupartners");
         json2.put("methods","add_contact");
         json2.accumulate("complex",json);
-        String url = "http://orupartners.com/cp/redirect_to.php";
+        String url = "http://propiran.com/cp/redirect_to.php";
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,url,json2, this ,this){
 
         };

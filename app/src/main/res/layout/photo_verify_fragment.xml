@@ -39,6 +39,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_weight="1"
             android:padding="10dp"
+            android:theme="@style/TextAppearence.App.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <EditText
@@ -47,10 +48,10 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:drawablePadding="10dp"
-                android:textColorHint="@color/white"
                 android:hint="Select Photo ID Type" />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
+            android:theme="@style/TextAppearence.App.TextInputLayout"
             android:layout_weight="1"
             android:padding="10dp"
             android:layout_width="match_parent"
@@ -63,7 +64,6 @@
                 android:textColor="@color/white"
                 android:drawablePadding="10dp"
                 android:inputType="number"
-                android:textColorHint="@color/white"
                 android:hint="Enter Your photo id number" />
 
         </android.support.design.widget.TextInputLayout>
@@ -71,6 +71,7 @@
             android:layout_weight="1"
             android:padding="10dp"
             android:layout_width="match_parent"
+            android:theme="@style/TextAppearence.App.TextInputLayout"
             android:layout_height="match_parent">
             <EditText
                 android:id="@+id/input_epiry_date"
@@ -79,7 +80,6 @@
                 android:textColor="@color/white"
                 android:drawablePadding="10dp"
                 android:inputType="date"
-                android:textColorHint="@color/white"
                 android:hint="Expiration Date"/>
 
         </android.support.design.widget.TextInputLayout>
