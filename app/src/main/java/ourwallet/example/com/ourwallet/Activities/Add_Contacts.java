@@ -9,7 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +27,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ourwallet.example.com.ourwallet.Constants;
 import ourwallet.example.com.ourwallet.Database.AndroidOpenDbHelper;
@@ -86,19 +87,47 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
     }
     private void validation(){
 
-    if(F_name.getText().toString().equals("")||L_name.getText().toString().equals("")||Phone.getText().toString().equals("")
-            ||Email.getText().toString().equals("")||Fax.getText().toString().equals("")||Address.getText().toString().equals("")
-            ||Grade.getText().toString().equals("")){
-        Snackbar.make(snackbar,"Fill empty Field",Snackbar.LENGTH_SHORT).show();
-    }
-    else if(!Grade.getText().toString().equals("A")&&!Grade.getText().toString().equals("B")
-            &&   !Grade.getText().toString().equals("C")&&!Grade.getText().toString().equals("D")){
-        Snackbar.make(snackbar,"Choose grades from A to D",Snackbar.LENGTH_SHORT).show();
+   if(F_name.getText().toString().equals("")){
+       F_name.setError("this is error");
+       F_name.requestFocus();
+   }
+   if(L_name.getText().toString().equals("")){
 
+       L_name.setError("this is error");
+       L_name.requestFocus();
+
+          }
+    if(Phone.getText().equals("")){
+
+        Phone.setError("this is error");
+        Phone.requestFocus();
+
+        }
+    if(!validateemail(Email.getText().toString())){
+
+        Email.setError("Invalid Email");
+        Email.requestFocus();
     }
-    else if(!isValidEmail(Email.getText().toString())){
-        Snackbar.make(snackbar,"invalid email format",Snackbar.LENGTH_SHORT).show();
+    if(Fax.getText().toString().equals("")){
+        Fax.setError("Invalid Fax");
+        Fax.requestFocus();
     }
+    if(Address.getText().toString().equals("")){
+            Address.setError("Invalid Fax");
+            Address.requestFocus();
+        }
+     if(Grade.getText().toString().equals("")){
+            Grade.setError("Invalid Fax");
+            Grade.requestFocus();
+        }
+
+
+
+        //||L_name.getText().toString().equals("")||Phone.getText().toString().equals("")
+//            ||Email.getText().toString().equals("")||Fax.getText().toString().equals("")||Address.getText().toString().equals("")
+//            ||Grade.getText().toString().equals("")){
+//        Snackbar.make(snackbar,"Fill empty Field",Snackbar.LENGTH_SHORT).show();
+//    }
 
         else{
         try {
@@ -109,9 +138,17 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
     }
 
     }
-    private static boolean isValidEmail(String email) {
-        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    protected boolean validateemail(String email){
+
+        String emailpattern="^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern=Pattern.compile(emailpattern);
+        Matcher matcher=pattern.matcher(email);
+        return matcher.matches();
+
+
+
     }
+
     private void Add_Contact() throws JSONException {
         showProgressDialog();
         JSONObject json = new JSONObject();
