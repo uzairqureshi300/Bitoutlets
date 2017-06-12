@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.Image;
 import android.os.Bundle;
@@ -104,32 +105,47 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 		AndroidOpenDbHelper openHelperClass = new AndroidOpenDbHelper(this);
 
 		sqliteDatabase = openHelperClass.getReadableDatabase();
-		cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_GPA, null, null, null, null, null, null);
-		startManagingCursor(cursor);
-		while (cursor.moveToNext()) {
-			Log.e("count",cursor.toString());
-			String First_name = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_Name));
-			String Phone = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_number));
-			String last_name = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_Lname));
-			String Email = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_email));
-			String Fax=cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_fax));
-			String Address=cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_address));
-			String Grade=cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_grade));
-			Contacts_Model ugPojoClass = new Contacts_Model();
-			ugPojoClass.setFirst_name(First_name);
-			ugPojoClass.setPhone(Phone);
-			ugPojoClass.setEmail(Email);
-			ugPojoClass.setFax(Fax);
-			ugPojoClass.setLast_name(last_name);
-			ugPojoClass.setAddress(Address);
-			ugPojoClass.setGrade(Grade);
-			contacts_list.add(ugPojoClass);
-			uGraduateNamesList.add(First_name);
-		}
+
+			cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_GPA, null, null, null, null, null, null);
+			startManagingCursor(cursor);
+			while (cursor.moveToNext()) {
+				Log.e("count", cursor.toString());
+				String First_name = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_Name));
+				String Phone = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_number));
+				String last_name = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_Lname));
+				String Email = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_email));
+				String Fax = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_fax));
+				String Address = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_address));
+				String Grade = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.Contact_grade));
+				Contacts_Model ugPojoClass = new Contacts_Model();
+				ugPojoClass.setFirst_name(First_name);
+				ugPojoClass.setPhone(Phone);
+				ugPojoClass.setEmail(Email);
+				ugPojoClass.setFax(Fax);
+				ugPojoClass.setLast_name(last_name);
+				ugPojoClass.setAddress(Address);
+				ugPojoClass.setGrade(Grade);
+				contacts_list.add(ugPojoClass);
+				uGraduateNamesList.add(First_name);
+			}
+
+
 //		sqliteDatabase.close();
 		return contacts_list;
 	}
+	public boolean checkForTables(){
+		boolean hasTables = false;
+		AndroidOpenDbHelper openHelperClass = new AndroidOpenDbHelper(this);
+		sqliteDatabase = openHelperClass.getWritableDatabase();
+		Cursor cursor = sqliteDatabase.rawQuery("SELECT * FROM " +AndroidOpenDbHelper.TABLE_NAME_GPA, null);
 
+		if(cursor != null && cursor.getCount() > 0){
+			hasTables=true;
+			cursor.close();
+		}
+
+		return hasTables;
+	}
 	private void List() throws JSONException {
 		showProgressDialog();
 		JSONObject json = new JSONObject();
@@ -279,9 +295,33 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 
 				Intent i=new Intent(getApplicationContext(),Add_Contacts.class);
 				startActivity(i);
+				finish();
+				break;
+			case R.id.syncronize:
+				dropTable();
+				populateList().clear();
+				uGraduateListAdapter=null;
+				uGraduateNamesListView.setAdapter(uGraduateListAdapter);
+			if(populateList().isEmpty() || populateList()==null){
+								try {
+					List();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
+		public  void dropTable() {
+			AndroidOpenDbHelper androidOpenDbHelperObj = new AndroidOpenDbHelper(this);
+			SQLiteDatabase db = androidOpenDbHelperObj.getWritableDatabase();
 
+			try {
+				db.execSQL("delete from "+ AndroidOpenDbHelper.TABLE_NAME_GPA);
+				Log.e("eee","fff");
+			} catch (SQLException e) {
+
+			}
+		}
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 		Toast.makeText(Contacts.this, i, Toast.LENGTH_SHORT).show();
