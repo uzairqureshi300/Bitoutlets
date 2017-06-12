@@ -76,18 +76,12 @@ public class Add_EPin extends AppCompatActivity implements com.android.volley.Re
         translayout.setVisibility(View.GONE);
         setToolbar();
         Click_Listeners();
-
-        //transaction_password();
     }
-
     private void Click_Listeners() {
         generate_epin.setOnClickListener(this);
         save_epin.setOnClickListener(this);
-
     }
-
     private void setToolbar() {
-
         setSupportActionBar(toolbar);
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayShowHomeEnabled(true); // show or hide the default home button
@@ -97,14 +91,12 @@ public class Add_EPin extends AppCompatActivity implements com.android.volley.Re
         toolbar_title.setText("Add Epin");
 
     }
-
     private void showProgressDialog() {
         mProgressDialog = new ProgressDialog(Add_EPin.this, R.style.AppCompatAlertDialogStyle);
         mProgressDialog.setMessage("Please Wait..");
         mProgressDialog.setCancelable(false);
         mProgressDialog.show();
     }
-
     private void save() {
         showProgressDialog();
         try {
@@ -112,7 +104,7 @@ public class Add_EPin extends AppCompatActivity implements com.android.volley.Re
             json.put("user_id", Constants.user_id);
             json.put("token", Constants.token);
             json.put("transaction_password", transaction_password.getText().toString());
-            //      json.put("epin", Arrays.toString(k));
+            //      json.put("epin", Arrays.toString(k));Jicstech54321
             JSONArray pins = new JSONArray();
             JSONObject cartItemsObjedct;
             for (int i = 0; i < generated_list.size(); i++) {
@@ -120,12 +112,13 @@ public class Add_EPin extends AppCompatActivity implements com.android.volley.Re
                 cartItemsObjedct.putOpt("epins", generated_list.get(i));
                 pins.put(cartItemsObjedct);
             }
+
             json.put("epin", pins);
             JSONObject json2 = new JSONObject();
             json2.put("to", "orupartners");
             json2.put("methods", "save_epin");
             json2.accumulate("complex", json);
-            String url = "http://orupartners.com/cp/redirect_to.php";
+            String url = "http://propiran.com/cp/redirect_to.php";
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
 
             };
@@ -137,38 +130,8 @@ public class Add_EPin extends AppCompatActivity implements com.android.volley.Re
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
+
     }
-
-    private void transaction_password() {
-        showProgressDialog();
-        try {
-
-
-            JSONObject json = new JSONObject();
-            json.put("user_id", Constants.user_id);
-            json.put("token", Constants.token);
-            json.put("password", "12345QweeQwe");
-            json.put("confirm", "12345QweeQwe");
-
-
-            JSONObject json2 = new JSONObject();
-            json2.put("to", "orupartners");
-            json2.put("methods", "set_transaction_password");
-            json2.accumulate("complex", json);
-            String url = "http://orupartners.com/cp/redirect_to.php";
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
-
-            };
-            jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    5000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest);
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     private void Generate_Keys() {
         showProgressDialog();
         try {
@@ -182,7 +145,7 @@ public class Add_EPin extends AppCompatActivity implements com.android.volley.Re
             json2.put("to", "orupartners");
             json2.put("methods", "generate_epins");
             json2.accumulate("complex", json);
-            String url = "http://orupartners.com/cp/redirect_to.php";
+            String url = "http://propiran.com/cp/redirect_to.php";
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
 
             };
@@ -195,7 +158,6 @@ public class Add_EPin extends AppCompatActivity implements com.android.volley.Re
             ex.printStackTrace();
         }
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -222,7 +184,6 @@ public class Add_EPin extends AppCompatActivity implements com.android.volley.Re
     public void onErrorResponse(VolleyError error) {
 
     }
-
     @Override
     public void onResponse(JSONObject response) {
         Log.e("response", response.toString());
@@ -235,7 +196,6 @@ public class Add_EPin extends AppCompatActivity implements com.android.volley.Re
                     for (int i = 0; i < array.length(); i++) {
                         generated_list.add(array.optString(i));
                         Log.e("List", generated_list.get(i));
-
                     }
                     translayout.setVisibility(View.VISIBLE);
                     epin_list.setVisibility(View.VISIBLE);

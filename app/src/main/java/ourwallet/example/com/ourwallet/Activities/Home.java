@@ -38,6 +38,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import ourwallet.example.com.ourwallet.Constants;
+import ourwallet.example.com.ourwallet.Home_Fragments.Transaction_fragment;
+import ourwallet.example.com.ourwallet.Home_Fragments.User_detailsfragment;
 import ourwallet.example.com.ourwallet.R;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener {
@@ -191,7 +193,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         json2.put("to", "orupartners");
         json2.put("methods", "save_contact");
         json2.accumulate("complex", json);
-        String url = "http://orupartners.com/cp/redirect_to.php";
+        String url = "http://propiran.com/cp/redirect_to.php";
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
 
         };
@@ -218,7 +220,17 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         // Handle navigation view item clicks here.
         Intent i;
         int id = item.getItemId();
+        if (id == R.id.nav_transaction_password) {
 
+
+            fragment = new Transaction_fragment();
+            if (fragment != null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame, fragment);
+                ft.commit();
+                // Handle the camera action
+            }
+        }
         if (id == R.id.nav_home) {
 
 

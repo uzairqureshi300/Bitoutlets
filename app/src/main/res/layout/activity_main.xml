@@ -27,14 +27,14 @@
        android:gravity="center"
        android:textSize="40dp"
        android:textStyle="bold"
-       android:textColor="@color/white"/>
+       android:textColor="@color/colorPrimary"/>
       <TextView
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:layout_weight="1.1"
           android:gravity="center"
           android:textSize="15dp"
-          android:textColor="@color/white"
+          android:textColor="@color/colorPrimary"
           android:text="and shop till you drop"/>
     <TextView
         android:layout_width="match_parent"
@@ -66,11 +66,11 @@
                 android:inputType="textEmailAddress"
                 android:drawablePadding="10dp"
                 android:text="jicstech"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:drawableLeft="@drawable/user_icon"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/colorPrimary"
                 android:textAllCaps="false"
-                android:textColorHighlight="@color/white"
+                android:textColorHighlight="@color/colorPrimary"
                 android:focusableInTouchMode="true"
                 android:hint="@string/hint_emailaddress" />
         </android.support.design.widget.TextInputLayout>
@@ -90,11 +90,11 @@
                 android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:text="Jicstech54321"
                 android:drawablePadding="10dp"
                 android:drawableLeft="@drawable/password_icon"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/colorPrimary"
                 android:inputType="textPassword"
                 android:hint="@string/hint_password" />
         </android.support.design.widget.TextInputLayout>
@@ -109,16 +109,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"/>
-      <Button
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:text="LOGIN"
-          android:id="@+id/login"
-          android:layout_weight="1.1"/>
       <ImageView
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:layout_weight="1.8"/>
+            android:src="@drawable/login_button"
+          android:id="@+id/login"
+          android:layout_weight="0.9"/>
+      <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="1"/>
   </LinearLayout>
 
 <LinearLayout

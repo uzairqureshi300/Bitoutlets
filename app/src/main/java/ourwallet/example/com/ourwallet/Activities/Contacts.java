@@ -139,7 +139,7 @@ public class Contacts extends AppCompatActivity implements com.android.volley.Re
 		json2.put("to","orupartners");
 		json2.put("methods","fetch_contacts");
 		json2.accumulate("complex",json);
-		String url = "http://orupartners.com/cp/redirect_to.php";
+		String url = "http://propiran.com/cp/redirect_to.php";
 		JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url,json2, this ,this){
 
 		};

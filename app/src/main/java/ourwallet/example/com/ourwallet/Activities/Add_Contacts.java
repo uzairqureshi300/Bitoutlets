@@ -27,6 +27,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ourwallet.example.com.ourwallet.Constants;
 import ourwallet.example.com.ourwallet.Database.AndroidOpenDbHelper;
@@ -85,11 +87,47 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
     }
     private void validation(){
 
-    if(F_name.getText().toString().equals("")||L_name.getText().toString().equals("")||Phone.getText().toString().equals("")
-            ||Email.getText().toString().equals("")||Fax.getText().toString().equals("")||Address.getText().toString().equals("")
-            ||Grade.getText().toString().equals("")){
-        Snackbar.make(snackbar,"Fill empty Field",Snackbar.LENGTH_SHORT).show();
+   if(F_name.getText().toString().equals("")){
+       F_name.setError("this is error");
+       F_name.requestFocus();
+   }
+   if(L_name.getText().toString().equals("")){
+
+       L_name.setError("this is error");
+       L_name.requestFocus();
+
+          }
+    if(Phone.getText().equals("")){
+
+        Phone.setError("this is error");
+        Phone.requestFocus();
+
+        }
+    if(!validateemail(Email.getText().toString())){
+
+        Email.setError("Invalid Email");
+        Email.requestFocus();
     }
+    if(Fax.getText().toString().equals("")){
+        Fax.setError("Invalid Fax");
+        Fax.requestFocus();
+    }
+    if(Address.getText().toString().equals("")){
+            Address.setError("Invalid Fax");
+            Address.requestFocus();
+        }
+     if(Grade.getText().toString().equals("")){
+            Grade.setError("Invalid Fax");
+            Grade.requestFocus();
+        }
+
+
+
+        //||L_name.getText().toString().equals("")||Phone.getText().toString().equals("")
+//            ||Email.getText().toString().equals("")||Fax.getText().toString().equals("")||Address.getText().toString().equals("")
+//            ||Grade.getText().toString().equals("")){
+//        Snackbar.make(snackbar,"Fill empty Field",Snackbar.LENGTH_SHORT).show();
+//    }
 
         else{
         try {
@@ -98,6 +136,16 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
     }
+
+    }
+    protected boolean validateemail(String email){
+
+        String emailpattern="^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern=Pattern.compile(emailpattern);
+        Matcher matcher=pattern.matcher(email);
+        return matcher.matches();
+
+
 
     }
 
@@ -120,7 +168,7 @@ public class Add_Contacts extends AppCompatActivity implements View.OnClickListe
         json2.put("to","orupartners");
         json2.put("methods","add_contact");
         json2.accumulate("complex",json);
-        String url = "http://orupartners.com/cp/redirect_to.php";
+        String url = "http://propiran.com/cp/redirect_to.php";
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,url,json2, this ,this){
 
         };

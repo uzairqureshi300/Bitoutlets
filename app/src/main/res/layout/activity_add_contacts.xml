@@ -39,6 +39,7 @@
                         <android.support.design.widget.TextInputLayout
                             android:id="@+id/input_layout_first_name"
                             android:layout_width="match_parent"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
 
                             android:layout_height="match_parent">
                             <EditText
@@ -55,6 +56,7 @@
                         <android.support.design.widget.TextInputLayout
                             android:id="@+id/input_layout_last_name"
                             android:layout_width="match_parent"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
 
                             android:layout_height="match_parent">
                             <EditText
@@ -71,9 +73,12 @@
                         <android.support.design.widget.TextInputLayout
                             android:id="@+id/input_layout_phone"
                             android:layout_width="match_parent"
+
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
                             android:layout_height="match_parent">
                             <EditText
                                 android:id="@+id/input_phone"
+                                android:inputType="phone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
@@ -86,6 +91,7 @@
                             android:id="@+id/input_layout_email"
                             android:layout_width="match_parent"
                             app:passwordToggleTint="#FFF"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
                             android:layout_height="match_parent">
 
                             <EditText
@@ -100,6 +106,7 @@
                             android:id="@+id/input_layout_fax"
                             android:layout_width="match_parent"
                             app:passwordToggleTint="#FFF"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
                             android:layout_height="match_parent">
 
                             <EditText
@@ -114,6 +121,7 @@
                             android:id="@+id/input_layout_address"
                             android:layout_width="match_parent"
                             app:passwordToggleTint="#FFF"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
                             android:layout_height="match_parent">
 
                             <EditText
@@ -128,6 +136,7 @@
                             android:id="@+id/input_layout_portal"
                             android:layout_width="match_parent"
                             app:passwordToggleTint="#FFF"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
                             android:layout_height="match_parent">
 
                             <EditText
@@ -142,6 +151,7 @@
                             android:id="@+id/input_layout_wallet_address"
                             android:layout_width="match_parent"
                             app:passwordToggleTint="#FFF"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
                             android:layout_height="match_parent">
 
                             <EditText
@@ -156,6 +166,7 @@
                             android:id="@+id/input_layout_created_by"
                             android:layout_width="match_parent"
                             app:passwordToggleTint="#FFF"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
                             android:layout_height="match_parent">
                             <EditText
                                 android:id="@+id/input_created_by"
@@ -169,6 +180,7 @@
                             android:id="@+id/input_layout_grade"
                             android:layout_width="match_parent"
                             app:passwordToggleTint="#FFF"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
                             android:layout_height="match_parent">
                             <EditText
                                 android:id="@+id/input_grade"

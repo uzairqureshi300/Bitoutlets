@@ -135,7 +135,7 @@ public class Photo_verification_fragment extends Fragment implements com.android
             json2.put("to", "orupartners");
             json2.put("methods", "photo_request");
             json2.accumulate("complex", json);
-            String url = "http://orupartners.com/cp/redirect_to.php";
+            String url = "http://propiran.com/cp/redirect_to.php";
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
 
             };
